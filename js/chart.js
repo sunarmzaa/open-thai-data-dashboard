@@ -2,10 +2,35 @@
    Open Data ไทย — Accessible Canvas Chart Library
    Supports: Line, Bar, Pie charts
    WCAG features: patterns, tooltips, aria-live, table toggle
+   Automatic Theme & Resize Adaptation
    ========================================================== */
 
 const ChartLib = (() => {
-  const COLORS = ['#60a5fa', '#fbbf24', '#34d399', '#f87171', '#a78bfa', '#fb923c', '#2dd4bf', '#f472b6'];
+  const COLORS = ['#3b82f6', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#f97316', '#14b8a6', '#ec4899'];
+  const registry = new Map();
+
+  // Listen for theme change and window resize to automatically redraw all charts
+  if (typeof window !== 'undefined') {
+    window.addEventListener('themechange', () => redrawAll());
+    window.addEventListener('resize', debounce(() => redrawAll(), 150));
+  }
+
+  function debounce(fn, delay) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn(...args), delay);
+    };
+  }
+
+  function getThemeStyles() {
+    const root = getComputedStyle(document.documentElement);
+    const gridColor = root.getPropertyValue('--chart-grid').trim() || 'rgba(148, 163, 184, 0.15)';
+    const textColor = root.getPropertyValue('--chart-text').trim() || '#94a3b8';
+    const pointStroke = root.getPropertyValue('--chart-point-stroke').trim() || '#0b1120';
+    const mainText = root.getPropertyValue('--color-text').trim() || '#f1f5f9';
+    return { gridColor, textColor, pointStroke, mainText };
+  }
 
   // --- Patterns for color-blind accessibility ---
   const PATTERNS = [
@@ -55,8 +80,21 @@ const ChartLib = (() => {
     ctx.fillStyle = ctx.createPattern(pCanvas, 'repeat');
   }
 
+  function redrawAll() {
+    registry.forEach((entry, canvasId) => {
+      const canvas = document.getElementById(canvasId);
+      // Only redraw if canvas still exists and is visible (or parent not hidden)
+      if (canvas && canvas.offsetParent !== null) {
+        if (entry.type === 'line') drawLineChart(canvasId, entry.config, false);
+        else if (entry.type === 'bar') drawBarChart(canvasId, entry.config, false);
+        else if (entry.type === 'pie') drawPieChart(canvasId, entry.config, false);
+      }
+    });
+  }
+
   // --- LINE CHART ---
-  function drawLineChart(canvasId, config) {
+  function drawLineChart(canvasId, config, saveRegistry = true) {
+    if (saveRegistry) registry.set(canvasId, { type: 'line', config });
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -66,11 +104,13 @@ const ChartLib = (() => {
     canvas.height = rect.height * dpr;
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
+    const { gridColor, textColor, pointStroke } = getThemeStyles();
     const w = rect.width;
     const h = rect.height;
-    const pad = { top: 20, right: 20, bottom: 50, left: 60 };
+    const pad = { top: 20, right: 24, bottom: 50, left: 65 };
     const chartW = w - pad.left - pad.right;
     const chartH = h - pad.top - pad.bottom;
 
@@ -79,13 +119,13 @@ const ChartLib = (() => {
     // Find max value
     let maxVal = 0;
     series.forEach(s => { s.data.forEach(v => { if (v > maxVal) maxVal = v; }); });
-    maxVal = Math.ceil(maxVal / 100) * 100;
+    maxVal = Math.ceil(maxVal / 100) * 100 || 100;
 
     // Clear
     ctx.clearRect(0, 0, w, h);
 
     // Grid
-    ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+    ctx.strokeStyle = gridColor;
     ctx.lineWidth = 1;
     const gridLines = 5;
     for (let i = 0; i <= gridLines; i++) {
@@ -97,19 +137,19 @@ const ChartLib = (() => {
 
       // Y labels
       const val = maxVal - (maxVal / gridLines) * i;
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '11px Inter, Noto Sans Thai, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.font = '600 11px Inter, Noto Sans Thai, sans-serif';
       ctx.textAlign = 'right';
-      ctx.fillText(formatNumber(val), pad.left - 8, y + 4);
+      ctx.fillText(formatNumber(val), pad.left - 10, y + 4);
     }
 
     // X labels
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#94a3b8';
-    const stepX = chartW / (labels.length - 1);
+    ctx.fillStyle = textColor;
+    const stepX = labels.length > 1 ? chartW / (labels.length - 1) : chartW / 2;
     labels.forEach((label, i) => {
       const x = pad.left + stepX * i;
-      ctx.fillText(label, x, h - pad.bottom + 20);
+      ctx.fillText(label, x, h - pad.bottom + 22);
     });
 
     // Lines
@@ -121,7 +161,7 @@ const ChartLib = (() => {
       ctx.strokeStyle = color;
       ctx.lineWidth = 3;
       ctx.lineJoin = 'round';
-      ctx.setLineDash(si === 0 ? [] : [8, 4]); // Dashed for second series
+      ctx.setLineDash(si === 0 ? [] : [6, 4]); // Dashed for second series
 
       ctx.beginPath();
       s.data.forEach((val, i) => {
@@ -142,8 +182,8 @@ const ChartLib = (() => {
         ctx.arc(x, y, 5, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
-        ctx.strokeStyle = '#0b1120';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = pointStroke;
+        ctx.lineWidth = 2.5;
         ctx.stroke();
       });
 
@@ -164,7 +204,8 @@ const ChartLib = (() => {
   }
 
   // --- BAR CHART ---
-  function drawBarChart(canvasId, config) {
+  function drawBarChart(canvasId, config, saveRegistry = true) {
+    if (saveRegistry) registry.set(canvasId, { type: 'bar', config });
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -174,26 +215,28 @@ const ChartLib = (() => {
     canvas.height = rect.height * dpr;
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
+    const { gridColor, textColor } = getThemeStyles();
     const w = rect.width;
     const h = rect.height;
-    const pad = { top: 20, right: 20, bottom: 60, left: 70 };
+    const pad = { top: 25, right: 20, bottom: 60, left: 70 };
     const chartW = w - pad.left - pad.right;
     const chartH = h - pad.top - pad.bottom;
 
     const { data, labels, title } = config;
 
-    const maxVal = Math.ceil(Math.max(...data.map(d => d.value)) / 1000) * 1000;
+    const maxVal = Math.ceil(Math.max(...data.map(d => d.value)) / 1000) * 1000 || 1000;
     const barCount = data.length;
-    const barWidth = Math.min(60, chartW / barCount * 0.6);
+    const barWidth = Math.min(64, chartW / barCount * 0.62);
     const gap = (chartW - barWidth * barCount) / (barCount + 1);
 
     // Clear
     ctx.clearRect(0, 0, w, h);
 
     // Grid
-    ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+    ctx.strokeStyle = gridColor;
     ctx.lineWidth = 1;
     const gridLines = 5;
     for (let i = 0; i <= gridLines; i++) {
@@ -203,10 +246,10 @@ const ChartLib = (() => {
       ctx.lineTo(w - pad.right, y);
       ctx.stroke();
       const val = maxVal - (maxVal / gridLines) * i;
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '11px Inter, Noto Sans Thai, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.font = '600 11px Inter, Noto Sans Thai, sans-serif';
       ctx.textAlign = 'right';
-      ctx.fillText(formatNumber(val), pad.left - 8, y + 4);
+      ctx.fillText(formatNumber(val), pad.left - 10, y + 4);
     }
 
     const pointPositions = [];
@@ -226,26 +269,25 @@ const ChartLib = (() => {
 
       // Border
       ctx.strokeStyle = color;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.5;
       ctx.strokeRect(x, y, barWidth, barH);
 
       // Label
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = '11px Inter, Noto Sans Thai, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.font = '600 11px Inter, Noto Sans Thai, sans-serif';
       ctx.textAlign = 'center';
       ctx.save();
-      ctx.translate(x + barWidth / 2, h - pad.bottom + 15);
-      // Rotate labels if too many
+      ctx.translate(x + barWidth / 2, h - pad.bottom + 18);
       if (barCount > 5) {
-        ctx.rotate(-0.4);
+        ctx.rotate(-0.35);
         ctx.textAlign = 'right';
       }
       ctx.fillText(d.label || labels[i], 0, 0);
       ctx.restore();
 
       // Value on top
-      ctx.fillStyle = '#cbd5e1';
-      ctx.font = '12px Inter, Noto Sans Thai, sans-serif';
+      ctx.fillStyle = textColor;
+      ctx.font = '700 12px Inter, Noto Sans Thai, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(formatNumber(d.value), x + barWidth / 2, y - 8);
 
@@ -275,7 +317,8 @@ const ChartLib = (() => {
   }
 
   // --- PIE CHART ---
-  function drawPieChart(canvasId, config) {
+  function drawPieChart(canvasId, config, saveRegistry = true) {
+    if (saveRegistry) registry.set(canvasId, { type: 'pie', config });
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -285,13 +328,15 @@ const ChartLib = (() => {
     canvas.height = rect.height * dpr;
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
+    const { pointStroke, mainText, textColor } = getThemeStyles();
     const w = rect.width;
     const h = rect.height;
     const { data, title } = config;
 
-    const total = data.reduce((sum, d) => sum + d.value, 0);
+    const total = data.reduce((sum, d) => sum + d.value, 0) || 1;
     const cx = w / 2;
     const cy = h / 2;
     const radius = Math.min(w, h) / 2 - 40;
@@ -320,18 +365,17 @@ const ChartLib = (() => {
       ctx.fill();
       ctx.restore();
 
-      ctx.strokeStyle = '#0b1120';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = pointStroke;
+      ctx.lineWidth = 2.5;
       ctx.stroke();
 
       // Label
       const midAngle = startAngle + sliceAngle / 2;
-      const labelR = radius + 20;
       const labelX = cx + Math.cos(midAngle) * (radius - (radius - innerRadius) / 2);
       const labelY = cy + Math.sin(midAngle) * (radius - (radius - innerRadius) / 2);
 
       const pct = ((d.value / total) * 100).toFixed(1);
-      ctx.fillStyle = '#f1f5f9';
+      ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 12px Inter, Noto Sans Thai, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -356,13 +400,13 @@ const ChartLib = (() => {
     });
 
     // Center text
-    ctx.fillStyle = '#f1f5f9';
+    ctx.fillStyle = mainText;
     ctx.font = 'bold 20px Inter, Noto Sans Thai, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(formatNumber(total), cx, cy - 8);
-    ctx.font = '12px Inter, Noto Sans Thai, sans-serif';
-    ctx.fillStyle = '#94a3b8';
+    ctx.font = '600 12px Inter, Noto Sans Thai, sans-serif';
+    ctx.fillStyle = textColor;
     ctx.fillText('ราย', cx, cy + 14);
 
     setupTooltip(canvas, slicePositions, canvasId);
@@ -378,6 +422,7 @@ const ChartLib = (() => {
   // --- Tooltip System ---
   function setupTooltip(canvas, positions, canvasId) {
     const wrapper = canvas.parentElement;
+    if (!wrapper) return;
     let tooltip = wrapper.querySelector('.chart-tooltip');
     if (!tooltip) {
       tooltip = document.createElement('div');
@@ -451,24 +496,30 @@ const ChartLib = (() => {
     const btnId = `toggle-${containerId}`;
     const tableId = `table-${containerId}`;
 
+    // If toggle already exists, do not recreate
+    if (document.getElementById(btnId)) return;
+
     const btn = document.createElement('button');
+    btn.type = 'button';
     btn.id = btnId;
     btn.className = 'btn btn-secondary btn-sm';
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', tableId);
-    btn.innerHTML = '📋 ดูข้อมูลเป็นตาราง';
+    btn.innerHTML = '<span aria-hidden="true">📋</span> ดูข้อมูลเป็นตาราง';
     btn.addEventListener('click', () => {
       const tableEl = document.getElementById(tableId);
       const isExpanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', !isExpanded);
       tableEl.hidden = isExpanded;
-      btn.innerHTML = isExpanded ? '📋 ดูข้อมูลเป็นตาราง' : '📊 ดูเป็นกราฟ';
+      btn.innerHTML = isExpanded 
+        ? '<span aria-hidden="true">📋</span> ดูข้อมูลเป็นตาราง' 
+        : '<span aria-hidden="true">📊</span> ดูเป็นกราฟ';
 
       // Toggle canvas visibility
       const canvas = container.querySelector('canvas');
       if (canvas) canvas.style.display = isExpanded ? 'block' : 'none';
 
-      announce(isExpanded ? 'แสดงกราฟ' : 'แสดงตารางข้อมูล');
+      announce(isExpanded ? 'แสดงกราฟแล้ว' : 'แสดงตารางข้อมูลแล้ว');
     });
 
     container.appendChild(btn);
@@ -499,22 +550,17 @@ const ChartLib = (() => {
     tableData.forEach(row => {
       const tr = document.createElement('tr');
       row.forEach((cell, ci) => {
-        const td = document.createElement('td');
-        td.textContent = cell;
         if (ci === 0) {
-          td.setAttribute('scope', 'row');
           const th = document.createElement('th');
           th.scope = 'row';
           th.textContent = cell;
           tr.appendChild(th);
         } else {
+          const td = document.createElement('td');
+          td.textContent = cell;
           tr.appendChild(td);
         }
       });
-      // Remove duplicate first cell since we replaced td with th
-      if (tr.children.length > row.length) {
-        tr.removeChild(tr.children[1]);
-      }
       tbody.appendChild(tr);
     });
     table.appendChild(tbody);
@@ -526,6 +572,10 @@ const ChartLib = (() => {
   function createLegend(containerId, items) {
     const container = document.getElementById(containerId);
     if (!container) return;
+
+    // Clear previous legend if redrawn
+    const existingLegend = container.querySelector('.chart-legend');
+    if (existingLegend) existingLegend.remove();
 
     const legend = document.createElement('div');
     legend.className = 'chart-legend';
@@ -548,12 +598,18 @@ const ChartLib = (() => {
     container.appendChild(legend);
   }
 
+  function formatNumber(num) {
+    if (typeof num !== 'number') return num;
+    return new Intl.NumberFormat('th-TH').format(num);
+  }
+
   return {
     drawLineChart,
     drawBarChart,
     drawPieChart,
     createTableToggle,
     createLegend,
+    redrawAll,
     COLORS,
   };
 })();

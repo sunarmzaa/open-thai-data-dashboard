@@ -17,7 +17,10 @@
         <span class="brand-icon" aria-hidden="true">📊</span>
         <span lang="en">Open Data</span> ไทย
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด">
+        <span aria-hidden="true">☀️</span>
+      </button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
       <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
         <a href="index.html" class="nav-link">หน้าหลัก</a>
         <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
@@ -41,8 +44,8 @@
               <h2 id="chart1-title">จำนวนผู้ป่วยไข้เลือดออกรายเดือน เปรียบเทียบปี 2567 กับ 2568</h2>
             </div>
             <div class="btn-group">
-              <button class="btn btn-secondary btn-sm" id="dl-chart1-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG">📷 ดาวน์โหลดภาพ</button>
-              <button class="btn btn-secondary btn-sm" id="dl-chart1-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV">📥 <span lang="en">CSV</span></button>
+              <button type="button" class="btn btn-secondary btn-sm" id="dl-chart1-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG"><span aria-hidden="true">📷</span> ดาวน์โหลดภาพ</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="dl-chart1-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV"><span aria-hidden="true">📥</span> <span lang="en">CSV</span></button>
             </div>
           </div>
           <div class="chart-canvas-wrapper">
@@ -64,8 +67,8 @@
               <h2 id="chart2-title">จำนวนผู้ป่วยไข้เลือดออกสะสม แยกตามภูมิภาค (ปี 2568)</h2>
             </div>
             <div class="btn-group">
-              <button class="btn btn-secondary btn-sm" id="dl-chart2-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG">📷 ดาวน์โหลดภาพ</button>
-              <button class="btn btn-secondary btn-sm" id="dl-chart2-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV">📥 <span lang="en">CSV</span></button>
+              <button type="button" class="btn btn-secondary btn-sm" id="dl-chart2-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG"><span aria-hidden="true">📷</span> ดาวน์โหลดภาพ</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="dl-chart2-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV"><span aria-hidden="true">📥</span> <span lang="en">CSV</span></button>
             </div>
           </div>
           <div class="chart-canvas-wrapper">
@@ -87,8 +90,8 @@
               <h2 id="chart3-title">สัดส่วนผู้ป่วยไข้เลือดออกตามช่วงอายุ (ปี 2568)</h2>
             </div>
             <div class="btn-group">
-              <button class="btn btn-secondary btn-sm" id="dl-chart3-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG">📷 ดาวน์โหลดภาพ</button>
-              <button class="btn btn-secondary btn-sm" id="dl-chart3-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV">📥 <span lang="en">CSV</span></button>
+              <button type="button" class="btn btn-secondary btn-sm" id="dl-chart3-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG"><span aria-hidden="true">📷</span> ดาวน์โหลดภาพ</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="dl-chart3-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV"><span aria-hidden="true">📥</span> <span lang="en">CSV</span></button>
             </div>
           </div>
           <div class="chart-canvas-wrapper" style="height: 360px;">
@@ -107,8 +110,8 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
-      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ ทันสมัย ใช้งานง่าย และเข้าถึงได้สำหรับทุกคน</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA / AAA</span> รองรับทั้ง <span lang="en">Light Mode</span> และ <span lang="en">Dark Mode</span></p>
     </div>
   </footer>
 

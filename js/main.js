@@ -1,11 +1,85 @@
 /* ==========================================================
    Open Data ไทย — Main JS (Global Navigation & Utilities)
+   Modern Enterprise UI / WCAG 2.2 AA & AAA Compliant
    ========================================================== */
 
+// Apply theme immediately to prevent flash of unstyled content
+(function applyInitialTheme() {
+  const savedTheme = localStorage.getItem('wcag_theme');
+  const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initNavigation();
   initCurrentPage();
 });
+
+/* --- Theme Switcher --- */
+function initThemeToggle() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  
+  // Ensure theme toggle button exists in header or nav-links
+  let toggleBtn = document.getElementById('theme-toggle');
+  if (!toggleBtn) {
+    const navInner = document.querySelector('.nav-inner');
+    const navToggle = document.getElementById('nav-toggle');
+    if (navInner && navToggle) {
+      toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.id = 'theme-toggle';
+      toggleBtn.className = 'theme-toggle';
+      navInner.insertBefore(toggleBtn, navToggle);
+    } else if (navInner) {
+      toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.id = 'theme-toggle';
+      toggleBtn.className = 'theme-toggle';
+      navInner.appendChild(toggleBtn);
+    }
+  }
+
+  function updateBtnUI(theme) {
+    if (!toggleBtn) return;
+    const isLight = theme === 'light';
+    toggleBtn.innerHTML = isLight ? '<span aria-hidden="true">🌙</span>' : '<span aria-hidden="true">☀️</span>';
+    toggleBtn.setAttribute('aria-label', isLight ? 'สลับเป็นโหมดมืด (Dark Mode)' : 'สลับเป็นโหมดสว่าง (Light Mode)');
+    toggleBtn.setAttribute('title', isLight ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง');
+  }
+
+  updateBtnUI(currentTheme);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const oldTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = oldTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('wcag_theme', newTheme);
+      updateBtnUI(newTheme);
+      
+      const announceMsg = newTheme === 'light' ? 'เปลี่ยนเป็นโหมดสว่างแล้ว' : 'เปลี่ยนเป็นโหมดมืดแล้ว';
+      announce(announceMsg);
+      showToast(announceMsg);
+
+      // Dispatch event for charts and dynamic components to re-render
+      window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+    });
+  }
+
+  // Listen to OS theme changes if user has no saved preference
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('wcag_theme')) {
+        const newTheme = e.matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        updateBtnUI(newTheme);
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+      }
+    });
+  }
+}
 
 /* --- Navigation --- */
 function initNavigation() {
@@ -17,6 +91,12 @@ function initNavigation() {
       const isOpen = links.getAttribute('data-open') === 'true';
       links.setAttribute('data-open', !isOpen);
       toggle.setAttribute('aria-expanded', !isOpen);
+      
+      if (!isOpen) {
+        // Focus first link when opened
+        const firstLink = links.querySelector('a, button');
+        if (firstLink) setTimeout(() => firstLink.focus(), 50);
+      }
     });
 
     // Close on Escape
@@ -30,7 +110,8 @@ function initNavigation() {
 
     // Close when clicking outside
     document.addEventListener('click', (e) => {
-      if (!toggle.contains(e.target) && !links.contains(e.target)) {
+      const themeBtn = document.getElementById('theme-toggle');
+      if (!toggle.contains(e.target) && !links.contains(e.target) && (!themeBtn || !themeBtn.contains(e.target))) {
         links.setAttribute('data-open', 'false');
         toggle.setAttribute('aria-expanded', 'false');
       }
@@ -46,6 +127,8 @@ function initCurrentPage() {
     const href = link.getAttribute('href');
     if (href === path || (path === '' && href === 'index.html')) {
       link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
     }
   });
 }
@@ -98,7 +181,6 @@ function downloadCSV(data, headers, filename) {
 
 /* --- Utility: Download Excel (simplified XLSX as CSV with .xlsx for demo) --- */
 function downloadExcel(data, headers, filename) {
-  // Use a simple tab-separated format for Excel compatibility
   const BOM = '\uFEFF';
   const rows = [headers.join('\t')];
   data.forEach(row => {
@@ -135,7 +217,6 @@ function shareURL(params) {
   navigator.clipboard.writeText(url.toString()).then(() => {
     showToast('คัดลอกลิงก์แล้ว');
   }).catch(() => {
-    // Fallback
     prompt('คัดลอกลิงก์:', url.toString());
   });
 }
@@ -154,7 +235,7 @@ function showToast(message) {
 
   setTimeout(() => {
     toast.style.opacity = '0';
-    toast.style.transition = 'opacity 0.3s';
+    toast.style.transition = 'opacity 0.3s ease';
     setTimeout(() => toast.remove(), 300);
   }, 3000);
 }
@@ -174,6 +255,7 @@ function createPagination(container, currentPage, totalPages, onPageChange) {
 
   // Prev
   const prevBtn = document.createElement('button');
+  prevBtn.type = 'button';
   prevBtn.className = 'page-btn';
   prevBtn.textContent = '‹ ก่อนหน้า';
   prevBtn.disabled = currentPage === 1;
@@ -215,6 +297,7 @@ function createPagination(container, currentPage, totalPages, onPageChange) {
 
   // Next
   const nextBtn = document.createElement('button');
+  nextBtn.type = 'button';
   nextBtn.className = 'page-btn';
   nextBtn.textContent = 'ถัดไป ›';
   nextBtn.disabled = currentPage === totalPages;
@@ -234,6 +317,7 @@ function createPagination(container, currentPage, totalPages, onPageChange) {
 
 function createPageBtn(page, currentPage, onPageChange) {
   const btn = document.createElement('button');
+  btn.type = 'button';
   btn.className = 'page-btn';
   btn.textContent = page;
   btn.setAttribute('aria-label', `ไปหน้า ${page}`);
@@ -254,7 +338,10 @@ function getNavHTML(activePage) {
           <span class="brand-icon" aria-hidden="true">📊</span>
           <span lang="en">Open Data</span> ไทย
         </a>
-        <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด">
+          <span aria-hidden="true">☀️</span>
+        </button>
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">
           ☰
         </button>
         <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
@@ -273,9 +360,10 @@ function getFooterHTML() {
   return `
     <footer class="site-footer" role="contentinfo">
       <div class="footer-inner">
-        <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
-        <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+        <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ ทันสมัย ใช้งานง่าย และเข้าถึงได้สำหรับทุกคน</p>
+        <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA / AAA</span> รองรับทั้ง <span lang="en">Light Mode</span> และ <span lang="en">Dark Mode</span></p>
       </div>
     </footer>
   `;
 }
+

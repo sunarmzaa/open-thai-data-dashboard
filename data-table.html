@@ -19,14 +19,14 @@
         border-radius: var(--radius-lg);
         background: var(--color-surface-1);
       }
-      .province-table tbody td {
+      .province-table tbody td, .province-table tbody th {
         display: flex;
         justify-content: space-between;
         padding: var(--space-xs) 0;
         border-bottom: 1px solid var(--color-border);
       }
       .province-table tbody td:last-child { border-bottom: none; }
-      .province-table tbody td::before {
+      .province-table tbody td::before, .province-table tbody th::before {
         content: attr(data-label);
         font-weight: 600;
         color: var(--color-text-3);
@@ -44,7 +44,10 @@
         <span class="brand-icon" aria-hidden="true">📊</span>
         <span lang="en">Open Data</span> ไทย
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด">
+        <span aria-hidden="true">☀️</span>
+      </button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
       <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
         <a href="index.html" class="nav-link">หน้าหลัก</a>
         <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
@@ -75,11 +78,11 @@
           </div>
         </div>
         <div class="toolbar-right">
-          <button class="btn btn-secondary btn-sm" id="export-csv" aria-label="ส่งออกข้อมูลเป็นไฟล์ CSV">
-            📥 <span lang="en">CSV</span>
+          <button type="button" class="btn btn-secondary btn-sm" id="export-csv" aria-label="ส่งออกข้อมูลเป็นไฟล์ CSV">
+            <span aria-hidden="true">📥</span> <span lang="en">CSV</span>
           </button>
-          <button class="btn btn-secondary btn-sm" id="export-excel" aria-label="ส่งออกข้อมูลเป็นไฟล์ Excel">
-            📥 <span lang="en">Excel</span>
+          <button type="button" class="btn btn-secondary btn-sm" id="export-excel" aria-label="ส่งออกข้อมูลเป็นไฟล์ Excel">
+            <span aria-hidden="true">📥</span> <span lang="en">Excel</span>
           </button>
         </div>
       </div>
@@ -106,8 +109,8 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
-      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ ทันสมัย ใช้งานง่าย และเข้าถึงได้สำหรับทุกคน</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA / AAA</span> รองรับทั้ง <span lang="en">Light Mode</span> และ <span lang="en">Dark Mode</span></p>
     </div>
   </footer>
 

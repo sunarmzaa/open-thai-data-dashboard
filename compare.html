@@ -17,7 +17,10 @@
         <span class="brand-icon" aria-hidden="true">📊</span>
         <span lang="en">Open Data</span> ไทย
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด">
+        <span aria-hidden="true">☀️</span>
+      </button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
       <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
         <a href="index.html" class="nav-link">หน้าหลัก</a>
         <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
@@ -104,11 +107,11 @@
 
       <!-- Action buttons -->
       <div class="btn-group" style="margin-top: var(--space-xl); justify-content: center;" id="action-buttons" hidden>
-        <button class="btn btn-secondary" id="btn-share" aria-label="แชร์ผลการเปรียบเทียบเป็นลิงก์">
-          🔗 แชร์ลิงก์
+        <button type="button" class="btn btn-secondary" id="btn-share" aria-label="แชร์ผลการเปรียบเทียบเป็นลิงก์">
+          <span aria-hidden="true">🔗</span> แชร์ลิงก์
         </button>
-        <button class="btn btn-secondary" id="btn-print" aria-label="พิมพ์รายงานสรุป">
-          🖨️ พิมพ์รายงาน
+        <button type="button" class="btn btn-secondary" id="btn-print" aria-label="พิมพ์รายงานสรุป">
+          <span aria-hidden="true">🖨️</span> พิมพ์รายงาน
         </button>
       </div>
     </div>
@@ -116,8 +119,8 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
-      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ ทันสมัย ใช้งานง่าย และเข้าถึงได้สำหรับทุกคน</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA / AAA</span> รองรับทั้ง <span lang="en">Light Mode</span> และ <span lang="en">Dark Mode</span></p>
     </div>
   </footer>
 

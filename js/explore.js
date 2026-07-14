@@ -227,14 +227,14 @@ function initExplore() {
 
         return `
           <tr>
-            <td data-label="ชื่อ">
+            <td data-label="ชื่อชุดข้อมูล">
               <div class="ds-title">${d.title}</div>
             </td>
             <td data-label="คำอธิบาย" class="no-mobile">
               <span style="font-size: var(--text-sm); color: var(--color-text-3);">${d.description.substring(0, 60)}…</span>
             </td>
             <td data-label="หน่วยงาน" class="no-mobile">${d.organization}</td>
-            <td data-label="อัปเดต">${d.lastUpdated}</td>
+            <td data-label="วันอัปเดต">${d.lastUpdated}</td>
             <td data-label="ความถี่" class="no-mobile">${d.frequency}</td>
             <td data-label="รูปแบบ">${formatBadges}</td>
             <td data-label="ดาวน์โหลด">${formatNumber(d.downloads)}</td>
