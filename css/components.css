@@ -17,8 +17,6 @@
   right: 0;
   height: var(--nav-height);
   background: var(--color-glass);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--color-glass-border);
   z-index: 1000;
   transition: background-color var(--transition-normal), border-color var(--transition-normal);
@@ -104,7 +102,7 @@
 
 .nav-link[aria-current="page"] {
   color: var(--color-primary);
-  background: var(--color-primary-glow);
+  background: var(--color-active-nav-bg, #2d3f58);
   font-weight: 700;
 }
 
