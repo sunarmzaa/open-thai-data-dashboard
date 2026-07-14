@@ -369,18 +369,40 @@ const ChartLib = (() => {
       ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // Label
+      // Label with high-contrast pill badge for AAA compliance across all themes
       const midAngle = startAngle + sliceAngle / 2;
       const labelX = cx + Math.cos(midAngle) * (radius - (radius - innerRadius) / 2);
       const labelY = cy + Math.sin(midAngle) * (radius - (radius - innerRadius) / 2);
 
       const pct = ((d.value / total) * 100).toFixed(1);
-      ctx.fillStyle = '#ffffff';
+      const pctText = `${pct}%`;
       ctx.font = 'bold 12px Inter, Noto Sans Thai, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      if (sliceAngle > 0.3) { // Only label if big enough
-        ctx.fillText(`${pct}%`, labelX, labelY);
+      
+      if (sliceAngle > 0.25) { // Only label if big enough
+        const textW = ctx.measureText(pctText).width;
+        const pillW = textW + 14;
+        const pillH = 22;
+        const pillX = labelX - pillW / 2;
+        const pillY = labelY - pillH / 2;
+
+        ctx.save();
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.92)'; // High-contrast dark slate pill
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(pillX, pillY, pillW, pillH, 6);
+        } else {
+          ctx.rect(pillX, pillY, pillW, pillH);
+        }
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(pctText, labelX, labelY);
       }
 
       slicePositions.push({
@@ -493,33 +515,36 @@ const ChartLib = (() => {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const btnId = `toggle-${containerId}`;
-    const tableId = `table-${containerId}`;
+    const cleanId = containerId.replace(/-toggle$/, '');
+    const btnId = `toggle-${cleanId}`;
+    const tableId = `table-${cleanId}`;
 
     // If toggle already exists, do not recreate
     if (document.getElementById(btnId)) return;
 
+    const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.id = btnId;
-    btn.className = 'btn btn-secondary btn-sm';
+    btn.className = 'btn btn-secondary btn-sm chart-view-toggle';
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', tableId);
-    btn.innerHTML = '<span aria-hidden="true">📋</span> ดูข้อมูลเป็นตาราง';
+    btn.innerHTML = `<span aria-hidden="true">📋</span> ${isEn ? 'Table View' : 'ดูข้อมูลเป็นตาราง'}`;
     btn.addEventListener('click', () => {
       const tableEl = document.getElementById(tableId);
       const isExpanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', !isExpanded);
       tableEl.hidden = isExpanded;
+      const curEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
       btn.innerHTML = isExpanded 
-        ? '<span aria-hidden="true">📋</span> ดูข้อมูลเป็นตาราง' 
-        : '<span aria-hidden="true">📊</span> ดูเป็นกราฟ';
+        ? `<span aria-hidden="true">📋</span> ${curEn ? 'Table View' : 'ดูข้อมูลเป็นตาราง'}` 
+        : `<span aria-hidden="true">📊</span> ${curEn ? 'Chart View' : 'ดูเป็นกราฟ'}`;
 
       // Toggle canvas visibility
       const canvas = container.querySelector('canvas');
       if (canvas) canvas.style.display = isExpanded ? 'block' : 'none';
 
-      announce(isExpanded ? 'แสดงกราฟแล้ว' : 'แสดงตารางข้อมูลแล้ว');
+      announce(isExpanded ? (curEn ? 'Switched to chart view' : 'แสดงกราฟแล้ว') : (curEn ? 'Switched to table view' : 'แสดงตารางข้อมูลแล้ว'));
     });
 
     container.appendChild(btn);
@@ -533,7 +558,7 @@ const ChartLib = (() => {
 
     const table = document.createElement('table');
     table.className = 'data-table';
-    table.setAttribute('aria-label', `ตารางข้อมูล: ${chartTitle}`);
+    table.setAttribute('aria-label', `${isEn ? 'Data Table: ' : 'ตารางข้อมูล: '}${chartTitle}`);
 
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
@@ -577,9 +602,10 @@ const ChartLib = (() => {
     const existingLegend = container.querySelector('.chart-legend');
     if (existingLegend) existingLegend.remove();
 
+    const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
     const legend = document.createElement('div');
     legend.className = 'chart-legend';
-    legend.setAttribute('aria-label', 'คำอธิบายสัญลักษณ์');
+    legend.setAttribute('aria-label', isEn ? 'Chart Legend' : 'คำอธิบายสัญลักษณ์');
 
     items.forEach((item, i) => {
       const el = document.createElement('div');
@@ -596,6 +622,23 @@ const ChartLib = (() => {
     });
 
     container.appendChild(legend);
+  }
+
+  function updateChartTogglesI18n() {
+    const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+    document.querySelectorAll('.chart-view-toggle').forEach(btn => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.innerHTML = isExpanded 
+        ? `<span aria-hidden="true">📊</span> ${isEn ? 'Chart View' : 'ดูเป็นกราฟ'}`
+        : `<span aria-hidden="true">📋</span> ${isEn ? 'Table View' : 'ดูข้อมูลเป็นตาราง'}`;
+    });
+    document.querySelectorAll('.chart-legend').forEach(leg => {
+      leg.setAttribute('aria-label', isEn ? 'Chart Legend' : 'คำอธิบายสัญลักษณ์');
+    });
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('languagechange', updateChartTogglesI18n);
   }
 
   function formatNumber(num) {
