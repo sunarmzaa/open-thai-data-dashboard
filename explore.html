@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="สำรวจและค้นหาชุดข้อมูลเปิดภาครัฐ กรองตามหมวดหมู่ หน่วยงาน และรูปแบบไฟล์">
+  <title>สำรวจชุดข้อมูล — Open Data ไทย</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Open Data ไทย หน้าหลัก">
+        <span class="brand-icon" aria-hidden="true">📊</span>
+        <span lang="en">Open Data</span> ไทย
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-link">หน้าหลัก</a>
+        <a href="explore.html" class="nav-link" aria-current="page">สำรวจข้อมูล</a>
+        <a href="visualization.html" class="nav-link">แสดงผลด้วยภาพ</a>
+        <a href="data-table.html" class="nav-link">ตารางข้อมูล</a>
+        <a href="compare.html" class="nav-link">เปรียบเทียบ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-content">
+    <div class="container">
+      <h1>สำรวจชุดข้อมูล</h1>
+      <p>ค้นหาและเข้าถึงชุดข้อมูลเปิดจากหน่วยงานภาครัฐทั่วประเทศ</p>
+
+      <div class="layout-sidebar">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar" aria-label="ตัวกรองข้อมูล">
+          <div class="card">
+            <h2 style="font-size: var(--text-lg); margin-bottom: var(--space-lg);">ตัวกรอง</h2>
+
+            <!-- Search -->
+            <div class="form-group">
+              <label for="filter-search" class="form-label">ค้นหา</label>
+              <input type="search" id="filter-search" class="form-input" placeholder="ค้นหาชุดข้อมูล..." autocomplete="off">
+            </div>
+
+            <!-- Category -->
+            <fieldset>
+              <legend>หมวดหมู่</legend>
+              <div id="filter-categories">
+                <!-- Populated by JS -->
+              </div>
+            </fieldset>
+
+            <!-- Organization -->
+            <fieldset>
+              <legend>หน่วยงาน</legend>
+              <div id="filter-orgs">
+                <!-- Populated by JS -->
+              </div>
+            </fieldset>
+
+            <!-- File Format -->
+            <fieldset>
+              <legend>รูปแบบไฟล์</legend>
+              <div id="filter-formats">
+                <!-- Populated by JS -->
+              </div>
+            </fieldset>
+
+            <!-- Year -->
+            <fieldset>
+              <legend>ปีของข้อมูล</legend>
+              <div id="filter-years">
+                <!-- Populated by JS -->
+              </div>
+            </fieldset>
+
+            <!-- Tags -->
+            <fieldset>
+              <legend>ป้ายกำกับ</legend>
+              <div id="filter-tags">
+                <!-- Populated by JS -->
+              </div>
+            </fieldset>
+
+            <button class="btn btn-secondary" id="clear-filters" style="width: 100%; margin-top: var(--space-md);">
+              ล้างตัวกรองทั้งหมด
+            </button>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div>
+          <!-- Results info -->
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <div id="results-count" role="status" aria-live="polite" style="font-size: var(--text-sm); color: var(--color-text-3);">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+            <div class="toolbar-right">
+              <label for="sort-select" class="sr-only">เรียงลำดับตาม</label>
+              <select id="sort-select" class="form-select" style="width: auto;">
+                <option value="name-asc">ชื่อ (ก-ฮ)</option>
+                <option value="name-desc">ชื่อ (ฮ-ก)</option>
+                <option value="date-desc" selected>วันอัปเดต (ล่าสุด)</option>
+                <option value="date-asc">วันอัปเดต (เก่าสุด)</option>
+                <option value="downloads-desc">ดาวน์โหลด (มากสุด)</option>
+                <option value="downloads-asc">ดาวน์โหลด (น้อยสุด)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Data Table -->
+          <div class="table-wrapper">
+            <table class="data-table responsive-table" id="datasets-table" aria-label="รายการชุดข้อมูล">
+              <thead>
+                <tr>
+                  <th scope="col" aria-sort="none" data-sort="name" id="th-name">ชื่อชุดข้อมูล</th>
+                  <th scope="col" class="no-mobile">คำอธิบาย</th>
+                  <th scope="col" class="no-mobile">หน่วยงาน</th>
+                  <th scope="col" aria-sort="descending" data-sort="date" id="th-date">วันอัปเดต</th>
+                  <th scope="col" class="no-mobile">ความถี่</th>
+                  <th scope="col">รูปแบบ</th>
+                  <th scope="col" aria-sort="none" data-sort="downloads" id="th-downloads">ดาวน์โหลด</th>
+                </tr>
+              </thead>
+              <tbody id="datasets-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div id="pagination-container"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/explore.js"></script>
+</body>
+</html>

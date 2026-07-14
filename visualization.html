@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="แสดงผลข้อมูลสถิติผู้ป่วยไข้เลือดออกด้วยกราฟ พร้อมตัวเลือกดูเป็นตารางสำหรับทุกคน">
+  <title>แสดงผลด้วยภาพ — Open Data ไทย</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Open Data ไทย หน้าหลัก">
+        <span class="brand-icon" aria-hidden="true">📊</span>
+        <span lang="en">Open Data</span> ไทย
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-link">หน้าหลัก</a>
+        <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
+        <a href="visualization.html" class="nav-link" aria-current="page">แสดงผลด้วยภาพ</a>
+        <a href="data-table.html" class="nav-link">ตารางข้อมูล</a>
+        <a href="compare.html" class="nav-link">เปรียบเทียบ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-content">
+    <div class="container">
+      <h1>แสดงผลข้อมูลด้วยภาพ</h1>
+      <p>ชุดข้อมูลตัวอย่าง: <strong>สถิติผู้ป่วยไข้เลือดออกรายเดือน</strong> — กรมควบคุมโรค</p>
+
+      <!-- Chart 1: Line — Year comparison -->
+      <section class="section" aria-labelledby="chart1-title">
+        <div class="chart-container" id="chart1-container">
+          <div class="chart-header">
+            <div>
+              <h2 id="chart1-title">จำนวนผู้ป่วยไข้เลือดออกรายเดือน เปรียบเทียบปี 2567 กับ 2568</h2>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm" id="dl-chart1-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG">📷 ดาวน์โหลดภาพ</button>
+              <button class="btn btn-secondary btn-sm" id="dl-chart1-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV">📥 <span lang="en">CSV</span></button>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-line" aria-label="กราฟเส้นเปรียบเทียบผู้ป่วยไข้เลือดออก ปี 2567 กับ 2568"></canvas>
+          </div>
+          <div id="chart1-legend"></div>
+          <div class="chart-summary">
+            <strong>สรุป:</strong> ปี 2568 มีจำนวนผู้ป่วยสูงกว่าปี 2567 ในทุกเดือน โดยจุดสูงสุดอยู่ในเดือนกรกฎาคม (2,100 ราย) เทียบกับปี 2567 (1,820 ราย) เพิ่มขึ้น 15.4% ช่วงระบาดหนักคือเดือนพฤษภาคม-กันยายน
+          </div>
+          <div id="chart1-toggle"></div>
+        </div>
+      </section>
+
+      <!-- Chart 2: Bar — By Region -->
+      <section class="section" aria-labelledby="chart2-title">
+        <div class="chart-container" id="chart2-container">
+          <div class="chart-header">
+            <div>
+              <h2 id="chart2-title">จำนวนผู้ป่วยไข้เลือดออกสะสม แยกตามภูมิภาค (ปี 2568)</h2>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm" id="dl-chart2-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG">📷 ดาวน์โหลดภาพ</button>
+              <button class="btn btn-secondary btn-sm" id="dl-chart2-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV">📥 <span lang="en">CSV</span></button>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-bar" aria-label="กราฟแท่งจำนวนผู้ป่วยไข้เลือดออกแยกตามภูมิภาค"></canvas>
+          </div>
+          <div id="chart2-legend"></div>
+          <div class="chart-summary">
+            <strong>สรุป:</strong> ภาคกลางมีจำนวนผู้ป่วยสะสมมากที่สุด (8,240 ราย) ตามด้วยภาคตะวันออกเฉียงเหนือ (6,830 ราย) และภาคใต้ (5,480 ราย) ภาคตะวันตกมีจำนวนน้อยที่สุด (2,180 ราย)
+          </div>
+          <div id="chart2-toggle"></div>
+        </div>
+      </section>
+
+      <!-- Chart 3: Pie — By Age Group -->
+      <section class="section" aria-labelledby="chart3-title">
+        <div class="chart-container" id="chart3-container">
+          <div class="chart-header">
+            <div>
+              <h2 id="chart3-title">สัดส่วนผู้ป่วยไข้เลือดออกตามช่วงอายุ (ปี 2568)</h2>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm" id="dl-chart3-img" aria-label="ดาวน์โหลดกราฟเป็นภาพ PNG">📷 ดาวน์โหลดภาพ</button>
+              <button class="btn btn-secondary btn-sm" id="dl-chart3-csv" aria-label="ดาวน์โหลดข้อมูลเป็นไฟล์ CSV">📥 <span lang="en">CSV</span></button>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper" style="height: 360px;">
+            <canvas id="chart-pie" aria-label="กราฟวงกลมสัดส่วนผู้ป่วยไข้เลือดออกตามช่วงอายุ"></canvas>
+          </div>
+          <div id="chart3-legend"></div>
+          <div class="chart-summary">
+            <strong>สรุป:</strong> กลุ่มอายุ 15-24 ปีมีสัดส่วนผู้ป่วยมากที่สุด (29.9%) รองลงมาคือ 25-44 ปี (27.4%) และ 0-14 ปี (23.8%) กลุ่มผู้สูงอายุ 65 ปีขึ้นไปมีสัดส่วนน้อยที่สุด (4.9%) แต่มีอัตราอาการรุนแรงสูง
+          </div>
+          <div id="chart3-toggle"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/visualization.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open Data ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ ค้นหาและเข้าถึงชุดข้อมูลจากหน่วยงานรัฐทั่วประเทศ">
+  <title>Open Data ไทย — หน้าหลัก</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Open Data ไทย หน้าหลัก">
+        <span class="brand-icon" aria-hidden="true">📊</span>
+        <span lang="en">Open Data</span> ไทย
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-link" aria-current="page">หน้าหลัก</a>
+        <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
+        <a href="visualization.html" class="nav-link">แสดงผลด้วยภาพ</a>
+        <a href="data-table.html" class="nav-link">ตารางข้อมูล</a>
+        <a href="compare.html" class="nav-link">เปรียบเทียบ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-content">
+    <div class="container">
+
+      <!-- Hero Section -->
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="text-gradient"><span lang="en">Open Data</span> ไทย</h1>
+        <p>แพลตฟอร์มข้อมูลเปิดภาครัฐ เข้าถึงชุดข้อมูลจากหน่วยงานรัฐทั่วประเทศ เพื่อความโปร่งใสและการพัฒนาที่ยั่งยืน</p>
+
+        <div class="search-box">
+          <label for="search-home" class="sr-only">ค้นหาชุดข้อมูล</label>
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input type="search" id="search-home" placeholder="ค้นหาชุดข้อมูล เช่น ไข้เลือดออก, คุณภาพอากาศ..." autocomplete="off">
+        </div>
+        <div id="search-results" role="status" aria-live="polite" class="sr-only"></div>
+      </section>
+
+      <!-- Stats -->
+      <section class="section" aria-labelledby="stats-title">
+        <h2 id="stats-title" class="sr-only">ตัวเลขสำคัญ</h2>
+        <div class="grid grid-4" id="stats-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Usage Trend Chart -->
+      <section class="section" aria-labelledby="trend-title">
+        <div class="chart-container">
+          <div class="chart-header">
+            <h2 id="trend-title">แนวโน้มการเข้าใช้งาน</h2>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="usage-chart" aria-label="กราฟเส้นแสดงแนวโน้มการเข้าใช้งานย้อนหลัง 12 เดือน"></canvas>
+          </div>
+          <div id="trend-legend"></div>
+          <div class="chart-summary" id="trend-summary">
+            <!-- Populated by JS -->
+          </div>
+          <div id="trend-table-toggle" style="margin-top: var(--space-md);"></div>
+        </div>
+      </section>
+
+      <!-- Popular Categories -->
+      <section class="section" aria-labelledby="categories-title">
+        <div class="section-header">
+          <h2 id="categories-title">หมวดข้อมูลยอดนิยม</h2>
+          <a href="explore.html" class="btn btn-outline btn-sm">ดูทั้งหมด</a>
+        </div>
+        <div class="grid grid-4" id="categories-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Latest Datasets -->
+      <section class="section" aria-labelledby="latest-title">
+        <div class="card">
+          <div class="section-header">
+            <h2 id="latest-title">ชุดข้อมูลอัปเดตล่าสุด</h2>
+            <a href="explore.html" class="btn btn-outline btn-sm">ดูทั้งหมด</a>
+          </div>
+          <div id="latest-list" role="list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

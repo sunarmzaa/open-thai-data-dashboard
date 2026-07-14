@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="เปรียบเทียบข้อมูลผู้ป่วยไข้เลือดออกระหว่างจังหวัด พร้อมแผนที่และตารางเปรียบเทียบ">
+  <title>เปรียบเทียบรายจังหวัด — Open Data ไทย</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Open Data ไทย หน้าหลัก">
+        <span class="brand-icon" aria-hidden="true">📊</span>
+        <span lang="en">Open Data</span> ไทย
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-link">หน้าหลัก</a>
+        <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
+        <a href="visualization.html" class="nav-link">แสดงผลด้วยภาพ</a>
+        <a href="data-table.html" class="nav-link">ตารางข้อมูล</a>
+        <a href="compare.html" class="nav-link" aria-current="page">เปรียบเทียบ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-content">
+    <div class="container">
+      <h1>เปรียบเทียบข้อมูลรายจังหวัด</h1>
+      <p>เลือก 2-5 จังหวัดเพื่อเปรียบเทียบข้อมูลผู้ป่วยไข้เลือดออก</p>
+
+      <!-- Controls -->
+      <section class="card" aria-labelledby="controls-title" style="margin-bottom: var(--space-xl);">
+        <h2 id="controls-title" style="font-size: var(--text-lg);">ตั้งค่าการเปรียบเทียบ</h2>
+
+        <div class="grid grid-2" style="margin-top: var(--space-lg);">
+          <!-- Province selector -->
+          <div>
+            <label for="province-search" class="form-label">เลือกจังหวัด (2-5 จังหวัด)</label>
+            <div class="combobox-wrapper" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="province-listbox">
+              <input type="text" id="province-search" class="combobox-input" placeholder="พิมพ์ค้นหาจังหวัด..." autocomplete="off" aria-autocomplete="list" aria-controls="province-listbox">
+              <div id="province-listbox" class="combobox-listbox" role="listbox" aria-label="รายชื่อจังหวัด">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+            <div id="selected-provinces" class="selected-tags" aria-live="polite" aria-label="จังหวัดที่เลือก">
+              <!-- Tags populated by JS -->
+            </div>
+            <div id="province-status" role="status" aria-live="polite" class="sr-only"></div>
+          </div>
+
+          <!-- Indicator + Year -->
+          <div>
+            <fieldset>
+              <legend class="form-label">ตัวชี้วัด</legend>
+              <div id="indicator-radios">
+                <!-- Populated by JS -->
+              </div>
+            </fieldset>
+
+            <div class="form-group" style="margin-top: var(--space-md);">
+              <label for="year-select" class="form-label">ปีข้อมูล</label>
+              <select id="year-select" class="form-select" style="width: auto;">
+                <option value="2568" selected>ปี 2568</option>
+                <option value="2567">ปี 2567</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <div class="grid grid-2" id="results-area" style="display: none;">
+        <!-- Map -->
+        <section class="map-container" aria-labelledby="map-title">
+          <h2 id="map-title" style="font-size: var(--text-lg);">แผนที่ประเทศไทย</h2>
+          <div id="map-svg-container">
+            <!-- SVG map inserted by JS -->
+          </div>
+          <div id="map-legend-container" class="map-legend" aria-label="คำอธิบายเฉดสี">
+            <!-- Legend populated by JS -->
+          </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section class="card" aria-labelledby="compare-table-title">
+          <h2 id="compare-table-title" style="font-size: var(--text-lg);">ตารางเปรียบเทียบ</h2>
+          <div class="table-wrapper" style="margin-top: var(--space-md);">
+            <table class="data-table" id="compare-table" aria-label="ตารางเปรียบเทียบจังหวัดที่เลือก">
+              <thead id="compare-thead">
+                <!-- Populated by JS -->
+              </thead>
+              <tbody id="compare-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="btn-group" style="margin-top: var(--space-xl); justify-content: center;" id="action-buttons" hidden>
+        <button class="btn btn-secondary" id="btn-share" aria-label="แชร์ผลการเปรียบเทียบเป็นลิงก์">
+          🔗 แชร์ลิงก์
+        </button>
+        <button class="btn btn-secondary" id="btn-print" aria-label="พิมพ์รายงานสรุป">
+          🖨️ พิมพ์รายงาน
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/compare.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ตารางข้อมูลผู้ป่วยไข้เลือดออก 77 จังหวัด รายเดือน พร้อมค้นหา กรอง เรียงลำดับ และส่งออก">
+  <title>ตารางข้อมูลเชิงลึก — Open Data ไทย</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    /* Page-specific: responsive card layout for large table */
+    @media (max-width: 768px) {
+      .province-table thead { display: none; }
+      .province-table tbody tr {
+        display: block;
+        margin-bottom: var(--space-md);
+        padding: var(--space-md);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        background: var(--color-surface-1);
+      }
+      .province-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--space-xs) 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .province-table tbody td:last-child { border-bottom: none; }
+      .province-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--color-text-3);
+        font-size: var(--text-xs);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Open Data ไทย หน้าหลัก">
+        <span class="brand-icon" aria-hidden="true">📊</span>
+        <span lang="en">Open Data</span> ไทย
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">☰</button>
+      <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-link">หน้าหลัก</a>
+        <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
+        <a href="visualization.html" class="nav-link">แสดงผลด้วยภาพ</a>
+        <a href="data-table.html" class="nav-link" aria-current="page">ตารางข้อมูล</a>
+        <a href="compare.html" class="nav-link">เปรียบเทียบ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-content">
+    <div class="container">
+      <h1>ตารางข้อมูลเชิงลึก</h1>
+      <p>ข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด × รายเดือน ปี 2568</p>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="search-province" class="sr-only">ค้นหาจังหวัด</label>
+            <input type="search" id="search-province" class="form-input" placeholder="🔍 ค้นหาจังหวัด..." style="width: 240px;" autocomplete="off">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="filter-region" class="sr-only">กรองตามภูมิภาค</label>
+            <select id="filter-region" class="form-select" style="width: auto;">
+              <option value="">ทุกภูมิภาค</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-secondary btn-sm" id="export-csv" aria-label="ส่งออกข้อมูลเป็นไฟล์ CSV">
+            📥 <span lang="en">CSV</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="export-excel" aria-label="ส่งออกข้อมูลเป็นไฟล์ Excel">
+            📥 <span lang="en">Excel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results count -->
+      <div id="table-results" role="status" aria-live="polite" style="font-size: var(--text-sm); color: var(--color-text-3); margin-bottom: var(--space-md);"></div>
+
+      <!-- Data Table -->
+      <div class="table-wrapper" style="max-height: 600px; overflow: auto;">
+        <table class="data-table sticky-col province-table" id="province-table" aria-label="ตารางข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด ปี 2568">
+          <thead id="province-thead">
+            <!-- Populated by JS: 2-level headers -->
+          </thead>
+          <tbody id="province-tbody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination-container"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p><span lang="en">Open Data</span> ไทย — แพลตฟอร์มข้อมูลเปิดภาครัฐ</p>
+      <p>พัฒนาตามมาตรฐาน <span lang="en">WCAG 2.2</span> ระดับ <span lang="en">AA</span></p>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/data-table.js"></script>
+</body>
+</html>
