@@ -94,7 +94,7 @@ function renderCategories() {
     <a href="explore.html?category=${encodeURIComponent(cat.name)}" 
        class="category-card animate-fade-in-up stagger-${i + 1}"
        aria-label="${cat.name} ${formatNumber(cat.count)} ชุดข้อมูล">
-      <div class="cat-icon" style="background: ${cat.color}20;" aria-hidden="true">
+      <div class="cat-icon" style="background: var(--color-surface-2); border: 1px solid var(--color-border);" aria-hidden="true">
         ${cat.icon}
       </div>
       <div class="cat-info">

@@ -597,8 +597,8 @@
 
 .stat-card .stat-label {
   font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-text-2);
+  font-weight: 700;
+  color: var(--color-text);
 }
 
 /* --- Section & Section Header --- */
@@ -705,8 +705,8 @@
 
 .category-card .cat-count {
   font-size: var(--text-sm);
-  color: var(--color-text-3);
-  font-weight: 500;
+  color: var(--color-text);
+  font-weight: 700;
 }
 
 /* --- Buttons --- */
@@ -1338,7 +1338,8 @@ legend {
 
 .dataset-item .ds-meta {
   font-size: var(--text-sm);
-  color: var(--color-text-3);
+  color: var(--color-text);
+  font-weight: 700;
   line-height: var(--leading-normal);
 }
 
