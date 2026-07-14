@@ -43,11 +43,16 @@ function ensureWcagSuiteLoaded() {
 
 /* --- Theme Switcher --- */
 function initThemeToggle() {
+  // If wcag-suite.js is loaded or loading, it handles #theme-toggle inside .wcag-quick-tools cleanly and avoids double-flipping events
+  if (window._wcagSuiteLoaded || document.querySelector('script[src*="wcag-suite.js"]') || document.querySelector('.wcag-quick-tools')) {
+    return;
+  }
+
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
   
-  // Ensure theme toggle button exists, unless handled by wcag quick tools
+  // Fallback if wcag-suite is absent
   let toggleBtn = document.getElementById('theme-toggle');
-  if (!toggleBtn && !document.querySelector('.wcag-quick-tools')) {
+  if (!toggleBtn) {
     const navActions = document.querySelector('.nav-actions');
     const navInner = document.querySelector('.nav-inner');
     const navToggle = document.getElementById('nav-toggle');
@@ -78,6 +83,11 @@ function initThemeToggle() {
 
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
+      if (typeof window.setTheme === 'function') {
+        const oldTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        window.setTheme(oldTheme === 'light' ? 'dark' : 'light');
+        return;
+      }
       const oldTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       const newTheme = oldTheme === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', newTheme);

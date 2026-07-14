@@ -41,6 +41,12 @@
     if (window._wcagSuiteInitialized) return;
     window._wcagSuiteInitialized = true;
     window._wcagSuiteLoaded = true;
+
+    if (!state.theme) {
+      state.theme = localStorage.getItem('wcag_theme') || document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+    window.setTheme = setTheme;
+
     initQuickTools();
     initFloatingWidget();
     injectDrawer();
@@ -66,6 +72,13 @@
   function initQuickTools() {
     const navActions = document.querySelector('.nav-actions');
     if (!navActions) return;
+
+    // Remove any duplicate standalone #theme-toggle outside .wcag-quick-tools to prevent event collisions
+    document.querySelectorAll('#theme-toggle, .theme-toggle').forEach(btn => {
+      if (!btn.closest('.wcag-quick-tools')) {
+        btn.remove();
+      }
+    });
 
     let quickTools = document.querySelector('.wcag-quick-tools');
     if (!quickTools) {
@@ -125,14 +138,13 @@
     if (btnMask) btnMask.addEventListener('click', () => toggleStateOption('readingMask', 'ไม้บรรทัดช่วยอ่าน'));
 
     // Theme toggle
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
+    document.querySelectorAll('.theme-toggle, #theme-toggle').forEach(themeBtn => {
       themeBtn.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = current === 'light' ? 'dark' : 'light';
+        const next = (current === 'light' || current === 'hc-white') ? 'dark' : 'light';
         setTheme(next);
       });
-    }
+    });
 
     // Drawer open button
     const openBtn = document.getElementById('wcag-open-btn');
@@ -355,12 +367,12 @@
     const btnMask = document.getElementById('quick-mask-btn');
     if (btnMask) btnMask.classList.toggle('active', state.readingMask);
 
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
+    document.querySelectorAll('.theme-toggle, #theme-toggle').forEach(themeBtn => {
       const isLight = currentTheme === 'light' || currentTheme === 'hc-white';
       themeBtn.innerHTML = isLight ? '<span aria-hidden="true">🌙</span>' : '<span aria-hidden="true">☀️</span>';
       themeBtn.setAttribute('title', isLight ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง');
-    }
+      themeBtn.setAttribute('aria-label', isLight ? 'สลับเป็นโหมดมืด (Dark Mode)' : 'สลับเป็นโหมดสว่าง (Light Mode)');
+    });
 
     // Floating widget panel buttons
     document.querySelectorAll('[data-fsize]').forEach(btn => {
