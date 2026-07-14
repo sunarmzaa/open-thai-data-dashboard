@@ -336,12 +336,12 @@ function initCompare() {
           <title>ภาคใต้</title>
         </path>
         <!-- Region labels -->
-        <text x="195" y="110" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="Inter, Noto Sans Thai, sans-serif" pointer-events="none">เหนือ</text>
-        <text x="310" y="210" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="Inter, Noto Sans Thai, sans-serif" pointer-events="none">อีสาน</text>
-        <text x="200" y="250" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="Inter, Noto Sans Thai, sans-serif" pointer-events="none">กลาง</text>
-        <text x="310" y="330" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="Inter, Noto Sans Thai, sans-serif" pointer-events="none">ตะวันออก</text>
-        <text x="110" y="270" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="Inter, Noto Sans Thai, sans-serif" pointer-events="none">ตะวันตก</text>
-        <text x="180" y="460" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="Inter, Noto Sans Thai, sans-serif" pointer-events="none">ใต้</text>
+        <text x="195" y="110" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="Sarabun, Inter, Noto Sans Thai, sans-serif" pointer-events="none">เหนือ</text>
+        <text x="310" y="210" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="Sarabun, Inter, Noto Sans Thai, sans-serif" pointer-events="none">อีสาน</text>
+        <text x="200" y="250" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="Sarabun, Inter, Noto Sans Thai, sans-serif" pointer-events="none">กลาง</text>
+        <text x="310" y="330" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="Sarabun, Inter, Noto Sans Thai, sans-serif" pointer-events="none">ตะวันออก</text>
+        <text x="110" y="270" text-anchor="middle" fill="#f1f5f9" font-size="10" font-family="Sarabun, Inter, Noto Sans Thai, sans-serif" pointer-events="none">ตะวันตก</text>
+        <text x="180" y="460" text-anchor="middle" fill="#f1f5f9" font-size="11" font-family="Sarabun, Inter, Noto Sans Thai, sans-serif" pointer-events="none">ใต้</text>
       </svg>
     `;
 
