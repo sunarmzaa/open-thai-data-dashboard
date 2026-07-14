@@ -12,32 +12,44 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+  ensureWcagSuiteLoaded();
   initThemeToggle();
   initNavigation();
   initCurrentPage();
 });
 
+/* --- Ensure WCAG Suite Script is Loaded --- */
+function ensureWcagSuiteLoaded() {
+  if (!document.querySelector('script[src="js/wcag-suite.js"]') && !window._wcagSuiteLoaded) {
+    const script = document.createElement('script');
+    script.src = 'js/wcag-suite.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+}
+
 /* --- Theme Switcher --- */
 function initThemeToggle() {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
   
-  // Ensure theme toggle button exists in header or nav-links
+  // Ensure theme toggle button exists, unless handled by wcag quick tools
   let toggleBtn = document.getElementById('theme-toggle');
-  if (!toggleBtn) {
+  if (!toggleBtn && !document.querySelector('.wcag-quick-tools')) {
+    const navActions = document.querySelector('.nav-actions');
     const navInner = document.querySelector('.nav-inner');
     const navToggle = document.getElementById('nav-toggle');
-    if (navInner && navToggle) {
+    if (navActions && navToggle) {
+      toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.id = 'theme-toggle';
+      toggleBtn.className = 'theme-toggle';
+      navActions.insertBefore(toggleBtn, navToggle);
+    } else if (navInner && navToggle) {
       toggleBtn = document.createElement('button');
       toggleBtn.type = 'button';
       toggleBtn.id = 'theme-toggle';
       toggleBtn.className = 'theme-toggle';
       navInner.insertBefore(toggleBtn, navToggle);
-    } else if (navInner) {
-      toggleBtn = document.createElement('button');
-      toggleBtn.type = 'button';
-      toggleBtn.id = 'theme-toggle';
-      toggleBtn.className = 'theme-toggle';
-      navInner.appendChild(toggleBtn);
     }
   }
 
@@ -338,12 +350,6 @@ function getNavHTML(activePage) {
           <span class="brand-icon" aria-hidden="true">📊</span>
           <span lang="en">Open Data</span> ไทย
         </a>
-        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด">
-          <span aria-hidden="true">☀️</span>
-        </button>
-        <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">
-          ☰
-        </button>
         <nav id="nav-links" class="nav-links" data-open="false" aria-label="เมนูหลัก">
           <a href="index.html" class="nav-link">หน้าหลัก</a>
           <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
@@ -351,6 +357,11 @@ function getNavHTML(activePage) {
           <a href="data-table.html" class="nav-link">ตารางข้อมูล</a>
           <a href="compare.html" class="nav-link">เปรียบเทียบ</a>
         </nav>
+        <div class="nav-actions" role="group" aria-label="เครื่องมือเสริมและการนำทาง">
+          <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">
+            ☰
+          </button>
+        </div>
       </div>
     </header>
   `;
