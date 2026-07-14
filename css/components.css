@@ -1687,12 +1687,41 @@ legend {
 }
 
 .wcag-tab-btn.tab-tree-highlight {
-  color: #10b981;
+  color: #047857;
 }
 
 .wcag-tab-btn.tab-tree-highlight.active {
-  color: #10b981;
-  border-top: 2px solid #10b981;
+  color: #047857;
+  border-top: 2px solid #047857;
+}
+
+[data-theme="dark"] .wcag-tab-btn.tab-tree-highlight,
+[data-theme="monochrome"] .wcag-tab-btn.tab-tree-highlight {
+  color: #34d399;
+}
+
+[data-theme="dark"] .wcag-tab-btn.tab-tree-highlight.active,
+[data-theme="monochrome"] .wcag-tab-btn.tab-tree-highlight.active {
+  color: #34d399;
+  border-top: 2px solid #34d399;
+}
+
+[data-theme="hc-yellow"] .wcag-tab-btn.tab-tree-highlight {
+  color: #ffff00;
+}
+
+[data-theme="hc-yellow"] .wcag-tab-btn.tab-tree-highlight.active {
+  color: #ffff00;
+  border-top: 2px solid #ffff00;
+}
+
+[data-theme="hc-white"] .wcag-tab-btn.tab-tree-highlight {
+  color: #000b08;
+}
+
+[data-theme="hc-white"] .wcag-tab-btn.tab-tree-highlight.active {
+  color: #000b08;
+  border-top: 2px solid #000b08;
 }
 
 /* --- Content Panels --- */
