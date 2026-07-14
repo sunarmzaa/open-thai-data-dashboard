@@ -39,6 +39,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initQuickTools();
+    initFloatingWidget();
     injectDrawer();
     applyAllSettings();
     initReadingMask();
@@ -54,23 +55,30 @@
 
   /* --- Quick Tools on Header --- */
   function initQuickTools() {
-    // Ensure quick tools exist inside .nav-actions
     const navActions = document.querySelector('.nav-actions');
     if (!navActions) return;
 
-    // Check if quick tools already exist
     let quickTools = document.querySelector('.wcag-quick-tools');
     if (!quickTools) {
       quickTools = document.createElement('div');
       quickTools.className = 'wcag-quick-tools';
       quickTools.setAttribute('role', 'group');
-      quickTools.setAttribute('aria-label', 'เครื่องมือการเข้าถึงและเปลี่ยนธีม');
+      quickTools.setAttribute('aria-label', 'เครื่องมือการเข้าถึงและเปลี่ยนธีมด่วน');
       quickTools.innerHTML = `
         <div class="font-size-group" role="group" aria-label="ปรับขนาดตัวอักษร">
           <button type="button" class="wcag-tool-btn" id="font-dec" aria-label="ลดขนาดตัวอักษร 90%" title="ลดขนาดอักษร (A-)">A-</button>
           <button type="button" class="wcag-tool-btn" id="font-norm" aria-label="ขนาดตัวอักษรปกติ 100%" title="ขนาดปกติ (A)">A</button>
           <button type="button" class="wcag-tool-btn" id="font-inc" aria-label="เพิ่มขนาดตัวอักษร 115%" title="เพิ่มขนาดอักษร (A+)">A+</button>
         </div>
+        <button type="button" class="wcag-tool-btn quick-action-btn" id="quick-contrast-btn" aria-label="สลับโหมดแสงและความคมชัดสูง" title="สลับโหมดแสงและความคมชัด (Contrast AAA)">
+          <span aria-hidden="true">💡</span> ปรับแสง
+        </button>
+        <button type="button" class="wcag-tool-btn quick-action-btn" id="quick-cursor-btn" aria-label="เปิดปิดตัวชี้เมาส์ขนาดใหญ่" title="ตัวชี้เมาส์ขนาดใหญ่ (Large Cursor)">
+          <span aria-hidden="true">👆</span> เคอร์เซอร์
+        </button>
+        <button type="button" class="wcag-tool-btn quick-action-btn" id="quick-mask-btn" aria-label="เปิดปิดแถบไม้บรรทัดช่วยอ่าน" title="แถบช่วยอ่าน (Reading Guide Mask)">
+          <span aria-hidden="true">📏</span> ช่วยอ่าน
+        </button>
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด (Theme)">
           <span aria-hidden="true">☀️</span>
         </button>
@@ -79,7 +87,6 @@
           <span class="wcag-trigger-text">การเข้าถึง <span class="badge-wcag-suite">Full</span></span>
         </button>
       `;
-      // Insert before mobile hamburger
       const navToggle = document.getElementById('nav-toggle');
       if (navToggle) {
         navActions.insertBefore(quickTools, navToggle);
@@ -88,19 +95,25 @@
       }
     }
 
-    // Bind font buttons
+    // Bind header quick buttons
     const btnDec = document.getElementById('font-dec');
     const btnNorm = document.getElementById('font-norm');
     const btnInc = document.getElementById('font-inc');
+    const btnContrast = document.getElementById('quick-contrast-btn');
+    const btnCursor = document.getElementById('quick-cursor-btn');
+    const btnMask = document.getElementById('quick-mask-btn');
 
     if (btnDec) btnDec.addEventListener('click', () => setFontSize('dec'));
     if (btnNorm) btnNorm.addEventListener('click', () => setFontSize('norm'));
     if (btnInc) btnInc.addEventListener('click', () => {
-      // Toggle upward through inc, inc2, inc3
       if (state.fontSize === 'inc') setFontSize('inc2');
       else if (state.fontSize === 'inc2') setFontSize('inc3');
       else setFontSize('inc');
     });
+
+    if (btnContrast) btnContrast.addEventListener('click', () => cycleContrastTheme());
+    if (btnCursor) btnCursor.addEventListener('click', () => toggleStateOption('largeCursor', 'ตัวชี้เมาส์ขนาดใหญ่'));
+    if (btnMask) btnMask.addEventListener('click', () => toggleStateOption('readingMask', 'ไม้บรรทัดช่วยอ่าน'));
 
     // Theme toggle
     const themeBtn = document.getElementById('theme-toggle');
@@ -121,11 +134,167 @@
     updateQuickToolsUI();
   }
 
+  /* --- Floating Accessibility Widget Panel (Full Option right on Screen) --- */
+  function initFloatingWidget() {
+    if (document.getElementById('wcag-floating-widget')) return;
+
+    const widget = document.createElement('div');
+    widget.id = 'wcag-floating-widget';
+    widget.className = 'wcag-floating-widget';
+    widget.setAttribute('role', 'region');
+    widget.setAttribute('aria-label', 'เครื่องมือช่วยเหลือการเข้าถึงแบบลอยตัว (Floating Accessibility Bar)');
+    widget.innerHTML = `
+      <div class="wcag-floating-panel" id="wcag-floating-panel" hidden aria-hidden="true">
+        <div class="floating-panel-header">
+          <strong><span aria-hidden="true">♿</span> เครื่องมือเข้าถึงด่วนแบบ Full Option</strong>
+          <button type="button" class="floating-close-btn" id="floating-close-btn" aria-label="ปิดเครื่องมือลอยตัว">&times;</button>
+        </div>
+        <div class="floating-panel-body">
+          <div class="floating-section">
+            <span class="floating-label">🔤 ขนาดตัวอักษร:</span>
+            <div class="floating-btn-group">
+              <button type="button" class="floating-opt-btn" data-fsize="dec">A- 90%</button>
+              <button type="button" class="floating-opt-btn" data-fsize="norm">A 100%</button>
+              <button type="button" class="floating-opt-btn" data-fsize="inc">A+ 115%</button>
+              <button type="button" class="floating-opt-btn" data-fsize="inc2">A++ 130%</button>
+              <button type="button" class="floating-opt-btn" data-fsize="inc3">A+++ 150%</button>
+            </div>
+          </div>
+
+          <div class="floating-section">
+            <span class="floating-label">💡 ปรับแสงและโหมดสี (Theme & High Contrast):</span>
+            <div class="floating-btn-group">
+              <button type="button" class="floating-opt-btn" data-theme-quick="light">☀️ สว่าง</button>
+              <button type="button" class="floating-opt-btn" data-theme-quick="dark">🌙 มืด</button>
+              <button type="button" class="floating-opt-btn" data-theme-quick="hc-yellow">🟡 ทองบนดำ (AAA)</button>
+              <button type="button" class="floating-opt-btn" data-theme-quick="hc-white">⚪ ดำบนขาว (AAA)</button>
+              <button type="button" class="floating-opt-btn" data-theme-quick="monochrome">🔘 ขาวดำ</button>
+            </div>
+          </div>
+
+          <div class="floating-section">
+            <span class="floating-label">👆 ตัวช่วยการมองเห็นและโฟกัส (Visual Aids):</span>
+            <div class="floating-btn-group">
+              <button type="button" class="floating-opt-btn" id="float-btn-cursor" data-toggle-quick="largeCursor">👆 เคอร์เซอร์ยักษ์</button>
+              <button type="button" class="floating-opt-btn" id="float-btn-mask" data-toggle-quick="readingMask">📏 ไม้บรรทัดช่วยอ่าน</button>
+              <button type="button" class="floating-opt-btn" id="float-btn-focus" data-toggle-quick="focusHighlight">🎯 เน้นกรอบโฟกัส</button>
+              <button type="button" class="floating-opt-btn" id="float-btn-links" data-toggle-quick="highlightLinks">🔗 ไฮไลท์ลิงก์</button>
+              <button type="button" class="floating-opt-btn" id="float-btn-dyslexia" data-toggle-quick="dyslexicFont">🧠 ฟอนต์ Dyslexia</button>
+            </div>
+          </div>
+
+          <div class="floating-section">
+            <span class="floating-label">🔊 เสียงอ่านและการเคลื่อนไหว (Audio & Motion):</span>
+            <div class="floating-btn-group">
+              <button type="button" class="floating-opt-btn" id="float-btn-voice" data-toggle-quick="voiceAnnouncer">🗣️ เปิดเสียงอ่านไทย</button>
+              <button type="button" class="floating-opt-btn" id="float-btn-motion" data-toggle-quick="reduceMotion">⏸️ ปิดอนิเมชัน</button>
+            </div>
+          </div>
+
+          <div class="floating-panel-footer">
+            <button type="button" class="btn btn-primary" id="float-open-drawer-btn" style="width: 100%; font-size: var(--text-xs);">
+              ⚙️ เปิดแผงตั้งค่าละเอียด & 🌳 Accessibility Tree
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="wcag-floating-trigger" id="wcag-floating-trigger" aria-expanded="false" aria-controls="wcag-floating-panel" aria-label="เปิดเครื่องมือช่วยเหลือการเข้าถึงแบบลอยตัว (Full Option)">
+        <span class="floating-icon" aria-hidden="true">♿</span>
+        <span class="floating-label-pill">เครื่องมือเข้าถึง <span class="badge-wcag-suite">Full Option</span></span>
+      </button>
+    `;
+
+    document.body.appendChild(widget);
+
+    const trigger = document.getElementById('wcag-floating-trigger');
+    const panel = document.getElementById('wcag-floating-panel');
+    const closeBtn = document.getElementById('floating-close-btn');
+
+    if (trigger && panel) {
+      trigger.addEventListener('click', () => {
+        const isOpen = !panel.hidden;
+        panel.hidden = isOpen;
+        panel.setAttribute('aria-hidden', String(isOpen));
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+        if (!isOpen) {
+          updateQuickToolsUI();
+          announceText('เปิดแผงเครื่องมือช่วยเหลือการเข้าถึงแบบลอยตัวแล้ว');
+        } else {
+          announceText('ปิดแผงเครื่องมือลอยตัวแล้ว');
+        }
+      });
+    }
+
+    if (closeBtn && panel && trigger) {
+      closeBtn.addEventListener('click', () => {
+        panel.hidden = true;
+        panel.setAttribute('aria-hidden', 'true');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      });
+    }
+
+    // Bind actions inside floating panel
+    document.querySelectorAll('[data-fsize]').forEach(btn => {
+      btn.addEventListener('click', () => setFontSize(btn.dataset.fsize));
+    });
+
+    document.querySelectorAll('[data-theme-quick]').forEach(btn => {
+      btn.addEventListener('click', () => setTheme(btn.dataset.themeQuick));
+    });
+
+    document.querySelectorAll('[data-toggle-quick]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.toggleQuick;
+        const labels = {
+          largeCursor: 'ตัวชี้เมาส์ขนาดใหญ่',
+          readingMask: 'ไม้บรรทัดช่วยอ่าน',
+          focusHighlight: 'เน้นกรอบโฟกัส',
+          highlightLinks: 'ไฮไลท์ลิงก์',
+          dyslexicFont: 'ฟอนต์สำหรับ Dyslexia',
+          voiceAnnouncer: 'เสียงอ่านข้อความ',
+          reduceMotion: 'ปิดอนิเมชัน'
+        };
+        toggleStateOption(key, labels[key] || key);
+      });
+    });
+
+    const openDrawerBtn = document.getElementById('float-open-drawer-btn');
+    if (openDrawerBtn) {
+      openDrawerBtn.addEventListener('click', () => {
+        if (panel) {
+          panel.hidden = true;
+          panel.setAttribute('aria-hidden', 'true');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+        openDrawer();
+      });
+    }
+  }
+
+  function toggleStateOption(key, label) {
+    state[key] = !state[key];
+    applyAllSettings();
+    saveSettings();
+    updateQuickToolsUI();
+    updateDrawerUI();
+    announceText(state[key] ? `เปิดใช้งาน: ${label}` : `ปิดใช้งาน: ${label}`);
+  }
+
+  function cycleContrastTheme() {
+    const themes = ['light', 'dark', 'hc-yellow', 'hc-white', 'monochrome'];
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const idx = themes.indexOf(current);
+    const next = themes[(idx + 1) % themes.length];
+    setTheme(next);
+  }
+
   function setFontSize(size) {
     state.fontSize = size;
     applyAllSettings();
     saveSettings();
     updateQuickToolsUI();
+    updateDrawerUI();
     announceText(`เปลี่ยนขนาดตัวอักษรเป็น: ${getSizeLabel(size)}`);
   }
 
@@ -159,6 +328,7 @@
   }
 
   function updateQuickToolsUI() {
+    // Header quick buttons
     const btnDec = document.getElementById('font-dec');
     const btnNorm = document.getElementById('font-norm');
     const btnInc = document.getElementById('font-inc');
@@ -166,13 +336,42 @@
     if (btnNorm) btnNorm.classList.toggle('active', state.fontSize === 'norm');
     if (btnInc) btnInc.classList.toggle('active', ['inc', 'inc2', 'inc3'].includes(state.fontSize));
 
-    const themeBtn = document.getElementById('theme-toggle');
+    const btnContrast = document.getElementById('quick-contrast-btn');
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    if (btnContrast) btnContrast.classList.toggle('active', ['hc-yellow', 'hc-white', 'monochrome'].includes(currentTheme));
+
+    const btnCursor = document.getElementById('quick-cursor-btn');
+    if (btnCursor) btnCursor.classList.toggle('active', state.largeCursor);
+
+    const btnMask = document.getElementById('quick-mask-btn');
+    if (btnMask) btnMask.classList.toggle('active', state.readingMask);
+
+    const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) {
       const isLight = currentTheme === 'light' || currentTheme === 'hc-white';
       themeBtn.innerHTML = isLight ? '<span aria-hidden="true">🌙</span>' : '<span aria-hidden="true">☀️</span>';
       themeBtn.setAttribute('title', isLight ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง');
     }
+
+    // Floating widget panel buttons
+    document.querySelectorAll('[data-fsize]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.fsize === state.fontSize);
+    });
+    document.querySelectorAll('[data-theme-quick]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.themeQuick === currentTheme);
+    });
+    document.querySelectorAll('[data-toggle-quick]').forEach(btn => {
+      const k = btn.dataset.toggleQuick;
+      btn.classList.toggle('active', Boolean(state[k]));
+    });
+
+    // Checkbox switches in drawer sync
+    document.querySelectorAll('.wcag-switch').forEach(ch => {
+      const k = ch.dataset.toggle;
+      if (k && ch.checked !== Boolean(state[k])) {
+        ch.checked = Boolean(state[k]);
+      }
+    });
   }
 
   /* --- Inject Full Option Drawer --- */
