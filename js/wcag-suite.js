@@ -703,10 +703,15 @@
       announceText('คืนค่าเริ่มต้นของการเข้าถึง WCAG ทั้งหมดแล้ว');
     });
 
-    // Close on Escape inside drawer
+    // Close on Escape inside drawer or turn off reading mask
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.getElementById('wcag-drawer')?.classList.contains('open')) {
-        closeDrawer();
+      if (e.key === 'Escape') {
+        const drawer = document.getElementById('wcag-drawer');
+        if (drawer && drawer.classList.contains('open')) {
+          closeDrawer();
+        } else if (state.readingMask) {
+          toggleStateOption('readingMask', 'ไม้บรรทัดช่วยอ่าน');
+        }
       }
     });
 
