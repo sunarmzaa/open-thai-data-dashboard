@@ -73,8 +73,8 @@
     const navActions = document.querySelector('.nav-actions');
     if (!navActions) return;
 
-    // Remove any duplicate standalone #theme-toggle outside .wcag-quick-tools to prevent event collisions
-    document.querySelectorAll('#theme-toggle, .theme-toggle').forEach(btn => {
+    // Remove any duplicate standalone #theme-toggle or #btn-i18n-toggle outside .wcag-quick-tools to prevent event collisions
+    document.querySelectorAll('#theme-toggle, .theme-toggle, #btn-i18n-toggle, .btn-i18n-toggle').forEach(btn => {
       if (!btn.closest('.wcag-quick-tools')) {
         btn.remove();
       }
@@ -101,6 +101,9 @@
         <button type="button" class="wcag-tool-btn quick-action-btn" id="quick-mask-btn" aria-label="เปิดปิดแถบไม้บรรทัดช่วยอ่าน" title="แถบช่วยอ่าน (Reading Guide Mask)">
           <span aria-hidden="true">📏</span> ช่วยอ่าน
         </button>
+        <button type="button" class="wcag-tool-btn btn-i18n-toggle" id="btn-i18n-toggle" aria-label="เปลี่ยนภาษาเป็นภาษาอังกฤษ / Switch to English" title="Switch to English / เปลี่ยนเป็นภาษาไทย">
+          🇹🇭 TH
+        </button>
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด (Theme)">
           <span aria-hidden="true">☀️</span>
         </button>
@@ -124,6 +127,17 @@
     const btnContrast = document.getElementById('quick-contrast-btn');
     const btnCursor = document.getElementById('quick-cursor-btn');
     const btnMask = document.getElementById('quick-mask-btn');
+    const btnI18n = document.getElementById('btn-i18n-toggle');
+
+    if (btnI18n && !btnI18n._i18nBound) {
+      btnI18n.addEventListener('click', () => {
+        if (typeof window.toggleLanguage === 'function') window.toggleLanguage();
+      });
+      btnI18n._i18nBound = true;
+    }
+    if (typeof window.updateI18nButtons === 'function' && typeof window.getCurrentLang === 'function') {
+      window.updateI18nButtons(window.getCurrentLang());
+    }
 
     if (btnDec) btnDec.addEventListener('click', () => setFontSize('dec'));
     if (btnNorm) btnNorm.addEventListener('click', () => setFontSize('norm'));
@@ -1224,5 +1238,74 @@
       }, 3500);
     }
   }
+
+  function updateWcagSuiteI18n() {
+    const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+
+    const pill = document.querySelector('#wcag-floating-trigger .floating-label-pill');
+    if (pill) pill.textContent = isEn ? 'A11y Tools' : 'เครื่องมือเข้าถึง';
+
+    const floatClose = document.getElementById('floating-close-btn');
+    if (floatClose) floatClose.setAttribute('aria-label', isEn ? 'Close floating tools' : 'ปิดเครื่องมือลอยตัว');
+
+    const floatHeader = document.querySelector('.floating-panel-header strong');
+    if (floatHeader) floatHeader.innerHTML = `<span aria-hidden="true">♿</span> ${isEn ? 'Quick A11y Tools' : 'เครื่องมือเข้าถึงด่วน'}`;
+
+    const sections = document.querySelectorAll('.floating-panel-body .floating-section .floating-label');
+    if (sections[0]) sections[0].textContent = isEn ? '🔤 Text Size:' : '🔤 ขนาดตัวอักษร:';
+    if (sections[1]) sections[1].textContent = isEn ? '💡 Theme & High Contrast:' : '💡 ปรับแสงและโหมดสี (Theme & High Contrast):';
+    if (sections[2]) sections[2].textContent = isEn ? '👆 Visual Aids:' : '👆 ตัวช่วยการมองเห็นและโฟกัส (Visual Aids):';
+    if (sections[3]) sections[3].textContent = isEn ? '🔊 Audio & Motion:' : '🔊 เสียงอ่านและการเคลื่อนไหว (Audio & Motion):';
+
+    const drawerBtn = document.getElementById('float-open-drawer-btn');
+    if (drawerBtn) drawerBtn.innerHTML = isEn ? '⚙️ Full Settings & 🌳 Accessibility Tree' : '⚙️ เปิดแผงตั้งค่าละเอียด & 🌳 Accessibility Tree';
+
+    // Theme quick buttons
+    const btnHcYellow = document.querySelector('[data-theme-quick="hc-yellow"]');
+    if (btnHcYellow) btnHcYellow.textContent = isEn ? '🟡 Gold/Black (AAA)' : '🟡 ทองบนดำ (AAA)';
+    const btnHcWhite = document.querySelector('[data-theme-quick="hc-white"]');
+    if (btnHcWhite) btnHcWhite.textContent = isEn ? '⚪ Black/White (AAA)' : '⚪ ดำบนขาว (AAA)';
+    const btnMono = document.querySelector('[data-theme-quick="monochrome"]');
+    if (btnMono) btnMono.textContent = isEn ? '🔘 Monochrome' : '🔘 ขาวดำ';
+
+    // Toggle quick buttons
+    const btnCursor = document.getElementById('float-btn-cursor');
+    if (btnCursor) btnCursor.textContent = isEn ? '👆 Large Cursor' : '👆 เคอร์เซอร์ยักษ์';
+    const btnMask = document.getElementById('float-btn-mask');
+    if (btnMask) btnMask.textContent = isEn ? '📏 Reading Guide Mask' : '📏 ไม้บรรทัดช่วยอ่าน';
+    const btnFocus = document.getElementById('float-btn-focus');
+    if (btnFocus) btnFocus.textContent = isEn ? '🎯 Focus Highlight' : '🎯 เน้นกรอบโฟกัส';
+    const btnLinks = document.getElementById('float-btn-links');
+    if (btnLinks) btnLinks.textContent = isEn ? '🔗 Highlight Links' : '🔗 ไฮไลท์ลิงก์';
+    const btnDyslexia = document.getElementById('float-btn-dyslexia');
+    if (btnDyslexia) btnDyslexia.textContent = isEn ? '🧠 Dyslexia Font' : '🧠 ฟอนต์ Dyslexia';
+    const btnVoice = document.getElementById('float-btn-voice');
+    if (btnVoice) btnVoice.textContent = isEn ? '🗣️ Voice Announcer' : '🗣️ เปิดเสียงอ่านไทย';
+    const btnMotion = document.getElementById('float-btn-motion');
+    if (btnMotion) btnMotion.textContent = isEn ? '⏸️ Reduce Motion' : '⏸️ ปิดอนิเมชัน';
+
+    // Quick tools header
+    const qContrast = document.getElementById('quick-contrast-btn');
+    if (qContrast) qContrast.innerHTML = `<span aria-hidden="true">💡</span> ${isEn ? 'Contrast' : 'ปรับแสง'}`;
+    const qCursor = document.getElementById('quick-cursor-btn');
+    if (qCursor) qCursor.innerHTML = `<span aria-hidden="true">👆</span> ${isEn ? 'Cursor' : 'เคอร์เซอร์'}`;
+    const qMask = document.getElementById('quick-mask-btn');
+    if (qMask) qMask.innerHTML = `<span aria-hidden="true">📏</span> ${isEn ? 'Guide' : 'ช่วยอ่าน'}`;
+    const qWcagText = document.querySelector('#wcag-open-btn .wcag-trigger-text');
+    if (qWcagText) qWcagText.textContent = isEn ? 'Accessibility' : 'การเข้าถึง';
+
+    // Drawer tabs
+    const tabTypo = document.getElementById('tab-typography');
+    if (tabTypo) tabTypo.textContent = isEn ? '🔤 Typography' : '🔤 ตัวอักษร';
+    const tabCol = document.getElementById('tab-color');
+    if (tabCol) tabCol.textContent = isEn ? '🎨 Color & Theme' : '🎨 โหมดสี';
+    const tabVis = document.getElementById('tab-visual');
+    if (tabVis) tabVis.textContent = isEn ? '👆 Visual & Audio' : '👆 ตัวช่วยพิเศษ';
+    const tabTree = document.getElementById('tab-tree');
+    if (tabTree) tabTree.textContent = isEn ? '🌳 Accessibility Tree' : '🌳 โครงสร้าง A11y Tree';
+  }
+
+  window.addEventListener('languagechange', updateWcagSuiteI18n);
+  setTimeout(updateWcagSuiteI18n, 200);
 
 })();

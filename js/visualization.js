@@ -3,147 +3,185 @@
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderLineChart();
-  renderBarChart();
-  renderPieChart();
+  renderAllCharts();
   setupDownloadButtons();
+
+  window.addEventListener('languagechange', renderAllCharts);
 
   // Redraw on resize
   window.addEventListener('resize', debounce(() => {
-    renderLineChart();
-    renderBarChart();
-    renderPieChart();
+    renderAllCharts();
   }, 250));
 });
 
+function renderAllCharts() {
+  renderLineChart();
+  renderBarChart();
+  renderPieChart();
+}
+
 function renderLineChart() {
+  const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+  const labels = isEn ? MONTHS_EN : MONTHS;
+
   ChartLib.drawLineChart('chart-line', {
-    title: 'จำนวนผู้ป่วยไข้เลือดออกรายเดือน เปรียบเทียบปี 2567 กับ 2568',
-    labels: MONTHS,
+    title: isEn ? 'Monthly Dengue Fever Cases (2024 vs 2025)' : 'จำนวนผู้ป่วยไข้เลือดออกรายเดือน เปรียบเทียบปี 2567 กับ 2568',
+    labels,
     series: [
-      { name: 'ปี 2567', data: DENGUE_MONTHLY_2567 },
-      { name: 'ปี 2568', data: DENGUE_MONTHLY_2568 },
+      { name: isEn ? 'Year 2024' : 'ปี 2567', data: DENGUE_MONTHLY_2567 },
+      { name: isEn ? 'Year 2025' : 'ปี 2568', data: DENGUE_MONTHLY_2568 },
     ],
   });
 
-  // Legend (only create once)
   const legendContainer = document.getElementById('chart1-legend');
-  if (legendContainer && legendContainer.children.length === 0) {
+  if (legendContainer) {
+    legendContainer.innerHTML = '';
     ChartLib.createLegend('chart1-legend', [
-      { label: 'ปี 2567 (เส้นทึบ)', color: ChartLib.COLORS[0] },
-      { label: 'ปี 2568 (เส้นประ)', color: ChartLib.COLORS[1] },
+      { label: isEn ? '2024 (Solid line)' : 'ปี 2567 (เส้นทึบ)', color: ChartLib.COLORS[0] },
+      { label: isEn ? '2025 (Dashed line)' : 'ปี 2568 (เส้นประ)', color: ChartLib.COLORS[1] },
     ]);
   }
 
-  // Table toggle (only create once)
   const toggleContainer = document.getElementById('chart1-toggle');
-  if (toggleContainer && toggleContainer.children.length === 0) {
-    const tableData = MONTHS.map((m, i) => [
+  if (toggleContainer) {
+    toggleContainer.innerHTML = '';
+    const tableData = labels.map((m, i) => [
       m,
       formatNumber(DENGUE_MONTHLY_2567[i]),
       formatNumber(DENGUE_MONTHLY_2568[i]),
       ((DENGUE_MONTHLY_2568[i] - DENGUE_MONTHLY_2567[i]) / DENGUE_MONTHLY_2567[i] * 100).toFixed(1) + '%'
     ]);
     ChartLib.createTableToggle('chart1-toggle', tableData,
-      ['เดือน', 'ปี 2567 (ราย)', 'ปี 2568 (ราย)', 'เปลี่ยนแปลง (%)'],
-      'เปรียบเทียบผู้ป่วยไข้เลือดออกรายเดือน'
+      isEn ? ['Month', '2024 (Cases)', '2025 (Cases)', 'Change (%)'] : ['เดือน', 'ปี 2567 (ราย)', 'ปี 2568 (ราย)', 'เปลี่ยนแปลง (%)'],
+      isEn ? 'Monthly Dengue Comparison Table' : 'เปรียบเทียบผู้ป่วยไข้เลือดออกรายเดือน'
     );
   }
 }
 
 function renderBarChart() {
+  const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+  const labels = DENGUE_BY_REGION.map(d => isEn ? d.regionEn : d.region);
+
   ChartLib.drawBarChart('chart-bar', {
-    title: 'จำนวนผู้ป่วยไข้เลือดออกสะสม แยกตามภูมิภาค',
-    data: DENGUE_BY_REGION.map(d => ({ label: d.region, value: d.cases })),
-    labels: DENGUE_BY_REGION.map(d => d.region),
+    title: isEn ? 'Cumulative Dengue Cases by Region' : 'จำนวนผู้ป่วยไข้เลือดออกสะสม แยกตามภูมิภาค',
+    data: DENGUE_BY_REGION.map((d, i) => ({ label: labels[i], value: d.cases })),
+    labels,
   });
 
   const legendContainer = document.getElementById('chart2-legend');
-  if (legendContainer && legendContainer.children.length === 0) {
+  if (legendContainer) {
+    legendContainer.innerHTML = '';
     ChartLib.createLegend('chart2-legend',
-      DENGUE_BY_REGION.map((d, i) => ({ label: d.region, color: ChartLib.COLORS[i] }))
+      DENGUE_BY_REGION.map((d, i) => ({ label: labels[i], color: ChartLib.COLORS[i] }))
     );
   }
 
   const toggleContainer = document.getElementById('chart2-toggle');
-  if (toggleContainer && toggleContainer.children.length === 0) {
+  if (toggleContainer) {
+    toggleContainer.innerHTML = '';
     const total = DENGUE_BY_REGION.reduce((s, d) => s + d.cases, 0);
-    const tableData = DENGUE_BY_REGION.map(d => [
-      d.region,
+    const tableData = DENGUE_BY_REGION.map((d, i) => [
+      labels[i],
       formatNumber(d.cases),
       ((d.cases / total) * 100).toFixed(1) + '%'
     ]);
     ChartLib.createTableToggle('chart2-toggle', tableData,
-      ['ภูมิภาค', 'จำนวนผู้ป่วย (ราย)', 'สัดส่วน (%)'],
-      'ผู้ป่วยไข้เลือดออกแยกตามภูมิภาค'
+      isEn ? ['Region', 'Cases', 'Proportion (%)'] : ['ภูมิภาค', 'จำนวนผู้ป่วย (ราย)', 'สัดส่วน (%)'],
+      isEn ? 'Dengue Cases by Region Table' : 'ผู้ป่วยไข้เลือดออกแยกตามภูมิภาค'
     );
   }
 }
 
 function renderPieChart() {
+  const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+  const labels = DENGUE_BY_AGE.map(d => isEn ? d.rangeEn : d.range);
+
   ChartLib.drawPieChart('chart-pie', {
-    title: 'สัดส่วนผู้ป่วยไข้เลือดออกตามช่วงอายุ',
-    data: DENGUE_BY_AGE.map(d => ({ label: d.range, value: d.cases })),
+    title: isEn ? 'Proportion of Dengue Cases by Age Group' : 'สัดส่วนผู้ป่วยไข้เลือดออกตามช่วงอายุ',
+    data: DENGUE_BY_AGE.map((d, i) => ({ label: labels[i], value: d.cases })),
   });
 
   const legendContainer = document.getElementById('chart3-legend');
-  if (legendContainer && legendContainer.children.length === 0) {
+  if (legendContainer) {
+    legendContainer.innerHTML = '';
     ChartLib.createLegend('chart3-legend',
       DENGUE_BY_AGE.map((d, i) => ({
-        label: `${d.range} — ${formatNumber(d.cases)} ราย (${d.percent}%)`,
+        label: `${labels[i]} — ${formatNumber(d.cases)} ${isEn ? 'cases' : 'ราย'} (${d.percent}%)`,
         color: ChartLib.COLORS[i]
       }))
     );
   }
 
   const toggleContainer = document.getElementById('chart3-toggle');
-  if (toggleContainer && toggleContainer.children.length === 0) {
-    const tableData = DENGUE_BY_AGE.map(d => [
-      d.range,
+  if (toggleContainer) {
+    toggleContainer.innerHTML = '';
+    const tableData = DENGUE_BY_AGE.map((d, i) => [
+      labels[i],
       formatNumber(d.cases),
       d.percent + '%'
     ]);
     ChartLib.createTableToggle('chart3-toggle', tableData,
-      ['ช่วงอายุ', 'จำนวนผู้ป่วย (ราย)', 'สัดส่วน (%)'],
-      'ผู้ป่วยไข้เลือดออกตามช่วงอายุ'
+      isEn ? ['Age Group', 'Cases', 'Proportion (%)'] : ['ช่วงอายุ', 'จำนวนผู้ป่วย (ราย)', 'สัดส่วน (%)'],
+      isEn ? 'Dengue Cases by Age Group Table' : 'ผู้ป่วยไข้เลือดออกตามช่วงอายุ'
     );
   }
 }
 
 function setupDownloadButtons() {
+  const isEn = () => typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+
   // Chart 1
-  document.getElementById('dl-chart1-img').addEventListener('click', () => {
-    downloadCanvasAsPNG('chart-line', 'dengue-monthly-comparison.png');
-    showToast('กำลังดาวน์โหลดกราฟ...');
-  });
-  document.getElementById('dl-chart1-csv').addEventListener('click', () => {
-    const headers = ['เดือน', 'ปี 2567', 'ปี 2568'];
-    const data = MONTHS.map((m, i) => [m, DENGUE_MONTHLY_2567[i], DENGUE_MONTHLY_2568[i]]);
-    downloadCSV(data, headers, 'dengue-monthly-comparison.csv');
-    showToast('กำลังดาวน์โหลดข้อมูล CSV...');
-  });
+  const dlC1Img = document.getElementById('dl-chart1-img');
+  if (dlC1Img) {
+    dlC1Img.addEventListener('click', () => {
+      downloadCanvasAsPNG('chart-line', 'dengue-monthly-comparison.png');
+      showToast(isEn() ? 'Downloading chart image...' : 'กำลังดาวน์โหลดกราฟ...');
+    });
+  }
+  const dlC1Csv = document.getElementById('dl-chart1-csv');
+  if (dlC1Csv) {
+    dlC1Csv.addEventListener('click', () => {
+      const headers = isEn() ? ['Month', '2024', '2025'] : ['เดือน', 'ปี 2567', 'ปี 2568'];
+      const months = isEn() ? MONTHS_EN : MONTHS;
+      const data = months.map((m, i) => [m, DENGUE_MONTHLY_2567[i], DENGUE_MONTHLY_2568[i]]);
+      downloadCSV(data, headers, 'dengue-monthly-comparison.csv');
+      showToast(isEn() ? 'Downloading CSV data...' : 'กำลังดาวน์โหลดข้อมูล CSV...');
+    });
+  }
 
   // Chart 2
-  document.getElementById('dl-chart2-img').addEventListener('click', () => {
-    downloadCanvasAsPNG('chart-bar', 'dengue-by-region.png');
-    showToast('กำลังดาวน์โหลดกราฟ...');
-  });
-  document.getElementById('dl-chart2-csv').addEventListener('click', () => {
-    const headers = ['ภูมิภาค', 'จำนวนผู้ป่วย'];
-    const data = DENGUE_BY_REGION.map(d => [d.region, d.cases]);
-    downloadCSV(data, headers, 'dengue-by-region.csv');
-    showToast('กำลังดาวน์โหลดข้อมูล CSV...');
-  });
+  const dlC2Img = document.getElementById('dl-chart2-img');
+  if (dlC2Img) {
+    dlC2Img.addEventListener('click', () => {
+      downloadCanvasAsPNG('chart-bar', 'dengue-by-region.png');
+      showToast(isEn() ? 'Downloading chart image...' : 'กำลังดาวน์โหลดกราฟ...');
+    });
+  }
+  const dlC2Csv = document.getElementById('dl-chart2-csv');
+  if (dlC2Csv) {
+    dlC2Csv.addEventListener('click', () => {
+      const headers = isEn() ? ['Region', 'Cases'] : ['ภูมิภาค', 'จำนวนผู้ป่วย'];
+      const data = DENGUE_BY_REGION.map(d => [isEn() ? d.regionEn : d.region, d.cases]);
+      downloadCSV(data, headers, 'dengue-by-region.csv');
+      showToast(isEn() ? 'Downloading CSV data...' : 'กำลังดาวน์โหลดข้อมูล CSV...');
+    });
+  }
 
   // Chart 3
-  document.getElementById('dl-chart3-img').addEventListener('click', () => {
-    downloadCanvasAsPNG('chart-pie', 'dengue-by-age.png');
-    showToast('กำลังดาวน์โหลดกราฟ...');
-  });
-  document.getElementById('dl-chart3-csv').addEventListener('click', () => {
-    const headers = ['ช่วงอายุ', 'จำนวนผู้ป่วย', 'สัดส่วน (%)'];
-    const data = DENGUE_BY_AGE.map(d => [d.range, d.cases, d.percent]);
-    downloadCSV(data, headers, 'dengue-by-age.csv');
-    showToast('กำลังดาวน์โหลดข้อมูล CSV...');
-  });
+  const dlC3Img = document.getElementById('dl-chart3-img');
+  if (dlC3Img) {
+    dlC3Img.addEventListener('click', () => {
+      downloadCanvasAsPNG('chart-pie', 'dengue-by-age.png');
+      showToast(isEn() ? 'Downloading chart image...' : 'กำลังดาวน์โหลดกราฟ...');
+    });
+  }
+  const dlC3Csv = document.getElementById('dl-chart3-csv');
+  if (dlC3Csv) {
+    dlC3Csv.addEventListener('click', () => {
+      const headers = isEn() ? ['Age Group', 'Cases', 'Proportion (%)'] : ['ช่วงอายุ', 'จำนวนผู้ป่วย', 'สัดส่วน (%)'];
+      const data = DENGUE_BY_AGE.map(d => [isEn() ? d.rangeEn : d.range, d.cases, d.percent]);
+      downloadCSV(data, headers, 'dengue-by-age.csv');
+      showToast(isEn() ? 'Downloading CSV data...' : 'กำลังดาวน์โหลดข้อมูล CSV...');
+    });
+  }
 }

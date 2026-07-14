@@ -74,9 +74,10 @@ function initThemeToggle() {
   function updateBtnUI(theme) {
     if (!toggleBtn) return;
     const isLight = theme === 'light';
+    const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
     toggleBtn.innerHTML = isLight ? '<span aria-hidden="true">🌙</span>' : '<span aria-hidden="true">☀️</span>';
-    toggleBtn.setAttribute('aria-label', isLight ? 'สลับเป็นโหมดมืด (Dark Mode)' : 'สลับเป็นโหมดสว่าง (Light Mode)');
-    toggleBtn.setAttribute('title', isLight ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง');
+    toggleBtn.setAttribute('aria-label', isEn ? (isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode') : (isLight ? 'สลับเป็นโหมดมืด (Dark Mode)' : 'สลับเป็นโหมดสว่าง (Light Mode)'));
+    toggleBtn.setAttribute('title', isEn ? (isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode') : (isLight ? 'สลับเป็นโหมดมืด' : 'สลับเป็นโหมดสว่าง'));
   }
 
   updateBtnUI(currentTheme);
@@ -94,7 +95,10 @@ function initThemeToggle() {
       localStorage.setItem('wcag_theme', newTheme);
       updateBtnUI(newTheme);
       
-      const announceMsg = newTheme === 'light' ? 'เปลี่ยนเป็นโหมดสว่างแล้ว' : 'เปลี่ยนเป็นโหมดมืดแล้ว';
+      const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+      const announceMsg = isEn
+        ? (newTheme === 'light' ? 'Switched to light mode' : 'Switched to dark mode')
+        : (newTheme === 'light' ? 'เปลี่ยนเป็นโหมดสว่างแล้ว' : 'เปลี่ยนเป็นโหมดมืดแล้ว');
       announce(announceMsg);
       showToast(announceMsg);
 
@@ -114,6 +118,10 @@ function initThemeToggle() {
       }
     });
   }
+
+  window.addEventListener('languagechange', () => {
+    updateBtnUI(document.documentElement.getAttribute('data-theme') || 'dark');
+  });
 }
 
 /* --- Navigation --- */
@@ -247,12 +255,13 @@ function downloadCanvasAsPNG(canvasId, filename) {
 
 /* --- Utility: Share URL --- */
 function shareURL(params) {
+  const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
   const url = new URL(window.location.href);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   navigator.clipboard.writeText(url.toString()).then(() => {
-    showToast('คัดลอกลิงก์แล้ว');
+    showToast(isEn ? 'Link copied' : 'คัดลอกลิงก์แล้ว');
   }).catch(() => {
-    prompt('คัดลอกลิงก์:', url.toString());
+    prompt(isEn ? 'Copy link:' : 'คัดลอกลิงก์:', url.toString());
   });
 }
 
@@ -283,18 +292,19 @@ function printReport() {
 /* --- Utility: Create pagination --- */
 function createPagination(container, currentPage, totalPages, onPageChange) {
   container.innerHTML = '';
+  const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
 
   const nav = document.createElement('nav');
-  nav.setAttribute('aria-label', 'การแบ่งหน้า');
+  nav.setAttribute('aria-label', isEn ? 'Pagination' : 'การแบ่งหน้า');
   nav.className = 'pagination';
 
   // Prev
   const prevBtn = document.createElement('button');
   prevBtn.type = 'button';
   prevBtn.className = 'page-btn';
-  prevBtn.textContent = '‹ ก่อนหน้า';
+  prevBtn.textContent = isEn ? '‹ Previous' : '‹ ก่อนหน้า';
   prevBtn.disabled = currentPage === 1;
-  prevBtn.setAttribute('aria-label', 'ไปหน้าก่อนหน้า');
+  prevBtn.setAttribute('aria-label', isEn ? 'Go to previous page' : 'ไปหน้าก่อนหน้า');
   prevBtn.addEventListener('click', () => onPageChange(currentPage - 1));
   nav.appendChild(prevBtn);
 
@@ -334,16 +344,16 @@ function createPagination(container, currentPage, totalPages, onPageChange) {
   const nextBtn = document.createElement('button');
   nextBtn.type = 'button';
   nextBtn.className = 'page-btn';
-  nextBtn.textContent = 'ถัดไป ›';
+  nextBtn.textContent = isEn ? 'Next ›' : 'ถัดไป ›';
   nextBtn.disabled = currentPage === totalPages;
-  nextBtn.setAttribute('aria-label', 'ไปหน้าถัดไป');
+  nextBtn.setAttribute('aria-label', isEn ? 'Go to next page' : 'ไปหน้าถัดไป');
   nextBtn.addEventListener('click', () => onPageChange(currentPage + 1));
   nav.appendChild(nextBtn);
 
   // Info
   const info = document.createElement('span');
   info.className = 'page-info';
-  info.textContent = `หน้า ${currentPage} จาก ${totalPages}`;
+  info.textContent = isEn ? `Page ${currentPage} of ${totalPages}` : `หน้า ${currentPage} จาก ${totalPages}`;
   info.setAttribute('aria-live', 'polite');
   nav.appendChild(info);
 
@@ -351,11 +361,12 @@ function createPagination(container, currentPage, totalPages, onPageChange) {
 }
 
 function createPageBtn(page, currentPage, onPageChange) {
+  const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'page-btn';
   btn.textContent = page;
-  btn.setAttribute('aria-label', `ไปหน้า ${page}`);
+  btn.setAttribute('aria-label', isEn ? `Go to page ${page}` : `ไปหน้า ${page}`);
   if (page === currentPage) {
     btn.setAttribute('aria-current', 'page');
   }

@@ -5,94 +5,97 @@
 
 const PROVINCES = [
   // ภาคเหนือ (Northern) — 9 จังหวัด
-  { name: 'เชียงใหม่', region: 'ภาคเหนือ', pop: 1789385 },
-  { name: 'เชียงราย', region: 'ภาคเหนือ', pop: 1296550 },
-  { name: 'ลำปาง', region: 'ภาคเหนือ', pop: 729654 },
-  { name: 'ลำพูน', region: 'ภาคเหนือ', pop: 404560 },
-  { name: 'แม่ฮ่องสอน', region: 'ภาคเหนือ', pop: 284138 },
-  { name: 'น่าน', region: 'ภาคเหนือ', pop: 479838 },
-  { name: 'พะเยา', region: 'ภาคเหนือ', pop: 470478 },
-  { name: 'แพร่', region: 'ภาคเหนือ', pop: 438298 },
-  { name: 'อุตรดิตถ์', region: 'ภาคเหนือ', pop: 454519 },
+  { name: 'เชียงใหม่', nameEn: 'Chiang Mai', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 1789385 },
+  { name: 'เชียงราย', nameEn: 'Chiang Rai', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 1296550 },
+  { name: 'ลำปาง', nameEn: 'Lampang', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 729654 },
+  { name: 'ลำพูน', nameEn: 'Lamphun', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 404560 },
+  { name: 'แม่ฮ่องสอน', nameEn: 'Mae Hong Son', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 284138 },
+  { name: 'น่าน', nameEn: 'Nan', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 479838 },
+  { name: 'พะเยา', nameEn: 'Phayao', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 470478 },
+  { name: 'แพร่', nameEn: 'Phrae', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 438298 },
+  { name: 'อุตรดิตถ์', nameEn: 'Uttaradit', region: 'ภาคเหนือ', regionEn: 'Northern', pop: 454519 },
   // ภาคตะวันออกเฉียงเหนือ (Northeastern) — 20 จังหวัด
-  { name: 'กาฬสินธุ์', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 975012 },
-  { name: 'ขอนแก่น', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1802712 },
-  { name: 'ชัยภูมิ', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1125099 },
-  { name: 'นครพนม', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 714536 },
-  { name: 'นครราชสีมา', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 2634428 },
-  { name: 'บึงกาฬ', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 422417 },
-  { name: 'บุรีรัมย์', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1579166 },
-  { name: 'มหาสารคาม', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 950381 },
-  { name: 'มุกดาหาร', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 352428 },
-  { name: 'ยโสธร', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 535140 },
-  { name: 'ร้อยเอ็ด', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1285854 },
-  { name: 'เลย', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 636389 },
-  { name: 'ศรีสะเกษ', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1467758 },
-  { name: 'สกลนคร', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1140383 },
-  { name: 'สุรินทร์', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1393124 },
-  { name: 'หนองคาย', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 517260 },
-  { name: 'หนองบัวลำภู', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 508414 },
-  { name: 'อุดรธานี', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1573851 },
-  { name: 'อุบลราชธานี', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 1872400 },
-  { name: 'อำนาจเจริญ', region: 'ภาคตะวันออกเฉียงเหนือ', pop: 375084 },
+  { name: 'กาฬสินธุ์', nameEn: 'Kalasin', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 975012 },
+  { name: 'ขอนแก่น', nameEn: 'Khon Kaen', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1802712 },
+  { name: 'ชัยภูมิ', nameEn: 'Chaiyaphum', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1125099 },
+  { name: 'นครพนม', nameEn: 'Nakhon Phanom', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 714536 },
+  { name: 'นครราชสีมา', nameEn: 'Nakhon Ratchasima', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 2634428 },
+  { name: 'บึงกาฬ', nameEn: 'Bueng Kan', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 422417 },
+  { name: 'บุรีรัมย์', nameEn: 'Buri Ram', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1579166 },
+  { name: 'มหาสารคาม', nameEn: 'Maha Sarakham', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 950381 },
+  { name: 'มุกดาหาร', nameEn: 'Mukdahan', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 352428 },
+  { name: 'ยโสธร', nameEn: 'Yasothon', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 535140 },
+  { name: 'ร้อยเอ็ด', nameEn: 'Roi Et', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1285854 },
+  { name: 'เลย', nameEn: 'Loei', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 636389 },
+  { name: 'ศรีสะเกษ', nameEn: 'Si Sa Ket', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1467758 },
+  { name: 'สกลนคร', nameEn: 'Sakon Nakhon', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1140383 },
+  { name: 'สุรินทร์', nameEn: 'Surin', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1393124 },
+  { name: 'หนองคาย', nameEn: 'Nong Khai', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 517260 },
+  { name: 'หนองบัวลำภู', nameEn: 'Nong Bua Lam Phu', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 508414 },
+  { name: 'อุดรธานี', nameEn: 'Udon Thani', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1573851 },
+  { name: 'อุบลราชธานี', nameEn: 'Ubon Ratchathani', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 1872400 },
+  { name: 'อำนาจเจริญ', nameEn: 'Amnat Charoen', region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', pop: 375084 },
   // ภาคกลาง (Central) — 22 จังหวัด
-  { name: 'กรุงเทพมหานคร', region: 'ภาคกลาง', pop: 5527994 },
-  { name: 'กำแพงเพชร', region: 'ภาคกลาง', pop: 717715 },
-  { name: 'ชัยนาท', region: 'ภาคกลาง', pop: 328923 },
-  { name: 'นครนายก', region: 'ภาคกลาง', pop: 259428 },
-  { name: 'นครปฐม', region: 'ภาคกลาง', pop: 919767 },
-  { name: 'นครสวรรค์', region: 'ภาคกลาง', pop: 1053519 },
-  { name: 'นนทบุรี', region: 'ภาคกลาง', pop: 1271951 },
-  { name: 'ปทุมธานี', region: 'ภาคกลาง', pop: 1149079 },
-  { name: 'พระนครศรีอยุธยา', region: 'ภาคกลาง', pop: 812737 },
-  { name: 'พิจิตร', region: 'ภาคกลาง', pop: 537647 },
-  { name: 'พิษณุโลก', region: 'ภาคกลาง', pop: 866891 },
-  { name: 'เพชรบูรณ์', region: 'ภาคกลาง', pop: 986228 },
-  { name: 'ลพบุรี', region: 'ภาคกลาง', pop: 756077 },
-  { name: 'สมุทรปราการ', region: 'ภาคกลาง', pop: 1340228 },
-  { name: 'สมุทรสงคราม', region: 'ภาคกลาง', pop: 193835 },
-  { name: 'สมุทรสาคร', region: 'ภาคกลาง', pop: 568832 },
-  { name: 'สระบุรี', region: 'ภาคกลาง', pop: 639969 },
-  { name: 'สิงห์บุรี', region: 'ภาคกลาง', pop: 209905 },
-  { name: 'สุโขทัย', region: 'ภาคกลาง', pop: 593264 },
-  { name: 'สุพรรณบุรี', region: 'ภาคกลาง', pop: 843387 },
-  { name: 'อ่างทอง', region: 'ภาคกลาง', pop: 279500 },
-  { name: 'อุทัยธานี', region: 'ภาคกลาง', pop: 328557 },
+  { name: 'กรุงเทพมหานคร', nameEn: 'Bangkok', region: 'ภาคกลาง', regionEn: 'Central', pop: 5527994 },
+  { name: 'กำแพงเพชร', nameEn: 'Kamphaeng Phet', region: 'ภาคกลาง', regionEn: 'Central', pop: 717715 },
+  { name: 'ชัยนาท', nameEn: 'Chai Nat', region: 'ภาคกลาง', regionEn: 'Central', pop: 328923 },
+  { name: 'นครนายก', nameEn: 'Nakhon Nayok', region: 'ภาคกลาง', regionEn: 'Central', pop: 259428 },
+  { name: 'นครปฐม', nameEn: 'Nakhon Pathom', region: 'ภาคกลาง', regionEn: 'Central', pop: 919767 },
+  { name: 'นครสวรรค์', nameEn: 'Nakhon Sawan', region: 'ภาคกลาง', regionEn: 'Central', pop: 1053519 },
+  { name: 'นนทบุรี', nameEn: 'Nonthaburi', region: 'ภาคกลาง', regionEn: 'Central', pop: 1271951 },
+  { name: 'ปทุมธานี', nameEn: 'Pathum Thani', region: 'ภาคกลาง', regionEn: 'Central', pop: 1149079 },
+  { name: 'พระนครศรีอยุธยา', nameEn: 'Phra Nakhon Si Ayutthaya', region: 'ภาคกลาง', regionEn: 'Central', pop: 812737 },
+  { name: 'พิจิตร', nameEn: 'Phichit', region: 'ภาคกลาง', regionEn: 'Central', pop: 537647 },
+  { name: 'พิษณุโลก', nameEn: 'Phitsanulok', region: 'ภาคกลาง', regionEn: 'Central', pop: 866891 },
+  { name: 'เพชรบูรณ์', nameEn: 'Phetchabun', region: 'ภาคกลาง', regionEn: 'Central', pop: 986228 },
+  { name: 'ลพบุรี', nameEn: 'Lop Buri', region: 'ภาคกลาง', regionEn: 'Central', pop: 756077 },
+  { name: 'สมุทรปราการ', nameEn: 'Samut Prakan', region: 'ภาคกลาง', regionEn: 'Central', pop: 1340228 },
+  { name: 'สมุทรสงคราม', nameEn: 'Samut Songkhram', region: 'ภาคกลาง', regionEn: 'Central', pop: 193835 },
+  { name: 'สมุทรสาคร', nameEn: 'Samut Sakhon', region: 'ภาคกลาง', regionEn: 'Central', pop: 568832 },
+  { name: 'สระบุรี', nameEn: 'Saraburi', region: 'ภาคกลาง', regionEn: 'Central', pop: 639969 },
+  { name: 'สิงห์บุรี', nameEn: 'Sing Buri', region: 'ภาคกลาง', regionEn: 'Central', pop: 209905 },
+  { name: 'สุโขทัย', nameEn: 'Sukhothai', region: 'ภาคกลาง', regionEn: 'Central', pop: 593264 },
+  { name: 'สุพรรณบุรี', nameEn: 'Suphan Buri', region: 'ภาคกลาง', regionEn: 'Central', pop: 843387 },
+  { name: 'อ่างทอง', nameEn: 'Ang Thong', region: 'ภาคกลาง', regionEn: 'Central', pop: 279500 },
+  { name: 'อุทัยธานี', nameEn: 'Uthai Thani', region: 'ภาคกลาง', regionEn: 'Central', pop: 328557 },
   // ภาคตะวันออก (Eastern) — 7 จังหวัด
-  { name: 'จันทบุรี', region: 'ภาคตะวันออก', pop: 536197 },
-  { name: 'ฉะเชิงเทรา', region: 'ภาคตะวันออก', pop: 710990 },
-  { name: 'ชลบุรี', region: 'ภาคตะวันออก', pop: 1558301 },
-  { name: 'ตราด', region: 'ภาคตะวันออก', pop: 229235 },
-  { name: 'ปราจีนบุรี', region: 'ภาคตะวันออก', pop: 485800 },
-  { name: 'ระยอง', region: 'ภาคตะวันออก', pop: 740145 },
-  { name: 'สระแก้ว', region: 'ภาคตะวันออก', pop: 564225 },
+  { name: 'จันทบุรี', nameEn: 'Chanthaburi', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 536197 },
+  { name: 'ฉะเชิงเทรา', nameEn: 'Chachoengsao', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 710990 },
+  { name: 'ชลบุรี', nameEn: 'Chon Buri', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 1558301 },
+  { name: 'ตราด', nameEn: 'Trat', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 229235 },
+  { name: 'ปราจีนบุรี', nameEn: 'Prachin Buri', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 485800 },
+  { name: 'ระยอง', nameEn: 'Rayong', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 740145 },
+  { name: 'สระแก้ว', nameEn: 'Sa Kaeo', region: 'ภาคตะวันออก', regionEn: 'Eastern', pop: 564225 },
   // ภาคตะวันตก (Western) — 5 จังหวัด
-  { name: 'กาญจนบุรี', region: 'ภาคตะวันตก', pop: 889946 },
-  { name: 'ตาก', region: 'ภาคตะวันตก', pop: 664452 },
-  { name: 'ประจวบคีรีขันธ์', region: 'ภาคตะวันตก', pop: 538630 },
-  { name: 'เพชรบุรี', region: 'ภาคตะวันตก', pop: 479350 },
-  { name: 'ราชบุรี', region: 'ภาคตะวันตก', pop: 864678 },
+  { name: 'กาญจนบุรี', nameEn: 'Kanchanaburi', region: 'ภาคตะวันตก', regionEn: 'Western', pop: 889946 },
+  { name: 'ตาก', nameEn: 'Tak', region: 'ภาคตะวันตก', regionEn: 'Western', pop: 664452 },
+  { name: 'ประจวบคีรีขันธ์', nameEn: 'Prachuap Khiri Khan', region: 'ภาคตะวันตก', regionEn: 'Western', pop: 538630 },
+  { name: 'เพชรบุรี', nameEn: 'Phetchaburi', region: 'ภาคตะวันตก', regionEn: 'Western', pop: 479350 },
+  { name: 'ราชบุรี', nameEn: 'Ratchaburi', region: 'ภาคตะวันตก', regionEn: 'Western', pop: 864678 },
   // ภาคใต้ (Southern) — 14 จังหวัด
-  { name: 'กระบี่', region: 'ภาคใต้', pop: 471620 },
-  { name: 'ชุมพร', region: 'ภาคใต้', pop: 507467 },
-  { name: 'ตรัง', region: 'ภาคใต้', pop: 642749 },
-  { name: 'นครศรีธรรมราช', region: 'ภาคใต้', pop: 1563877 },
-  { name: 'นราธิวาส', region: 'ภาคใต้', pop: 808182 },
-  { name: 'ปัตตานี', region: 'ภาคใต้', pop: 706686 },
-  { name: 'พังงา', region: 'ภาคใต้', pop: 270764 },
-  { name: 'พัทลุง', region: 'ภาคใต้', pop: 528837 },
-  { name: 'ภูเก็ต', region: 'ภาคใต้', pop: 416582 },
-  { name: 'ยะลา', region: 'ภาคใต้', pop: 523210 },
-  { name: 'ระนอง', region: 'ภาคใต้', pop: 188600 },
-  { name: 'สงขลา', region: 'ภาคใต้', pop: 1435635 },
-  { name: 'สตูล', region: 'ภาคใต้', pop: 322791 },
-  { name: 'สุราษฎร์ธานี', region: 'ภาคใต้', pop: 1067838 },
+  { name: 'กระบี่', nameEn: 'Krabi', region: 'ภาคใต้', regionEn: 'Southern', pop: 471620 },
+  { name: 'ชุมพร', nameEn: 'Chumphon', region: 'ภาคใต้', regionEn: 'Southern', pop: 507467 },
+  { name: 'ตรัง', nameEn: 'Trang', region: 'ภาคใต้', regionEn: 'Southern', pop: 642749 },
+  { name: 'นครศรีธรรมราช', nameEn: 'Nakhon Si Thammarat', region: 'ภาคใต้', regionEn: 'Southern', pop: 1563877 },
+  { name: 'นราธิวาส', nameEn: 'Narathiwat', region: 'ภาคใต้', regionEn: 'Southern', pop: 808182 },
+  { name: 'ปัตตานี', nameEn: 'Pattani', region: 'ภาคใต้', regionEn: 'Southern', pop: 706686 },
+  { name: 'พังงา', nameEn: 'Phang Nga', region: 'ภาคใต้', regionEn: 'Southern', pop: 270764 },
+  { name: 'พัทลุง', nameEn: 'Phatthalung', region: 'ภาคใต้', regionEn: 'Southern', pop: 528837 },
+  { name: 'ภูเก็ต', nameEn: 'Phuket', region: 'ภาคใต้', regionEn: 'Southern', pop: 416582 },
+  { name: 'ยะลา', nameEn: 'Yala', region: 'ภาคใต้', regionEn: 'Southern', pop: 523210 },
+  { name: 'ระนอง', nameEn: 'Ranong', region: 'ภาคใต้', regionEn: 'Southern', pop: 188600 },
+  { name: 'สงขลา', nameEn: 'Songkhla', region: 'ภาคใต้', regionEn: 'Southern', pop: 1435635 },
+  { name: 'สตูล', nameEn: 'Satun', region: 'ภาคใต้', regionEn: 'Southern', pop: 322791 },
+  { name: 'สุราษฎร์ธานี', nameEn: 'Surat Thani', region: 'ภาคใต้', regionEn: 'Southern', pop: 1067838 },
 ];
 
 const REGIONS = ['ภาคเหนือ', 'ภาคตะวันออกเฉียงเหนือ', 'ภาคกลาง', 'ภาคตะวันออก', 'ภาคตะวันตก', 'ภาคใต้'];
+const REGIONS_EN = ['Northern', 'Northeastern', 'Central', 'Eastern', 'Western', 'Southern'];
 
 const MONTHS = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 // --- สถิติหน้าหลัก ---
 const STATS = {
@@ -104,46 +107,49 @@ const STATS = {
 
 // --- การเข้าใช้งานย้อนหลัง 12 เดือน ---
 const USAGE_TREND = [
-  { month: 'ก.ค. 67', value: 98500 },
-  { month: 'ส.ค. 67', value: 105200 },
-  { month: 'ก.ย. 67', value: 112300 },
-  { month: 'ต.ค. 67', value: 119800 },
-  { month: 'พ.ย. 67', value: 128400 },
-  { month: 'ธ.ค. 67', value: 135100 },
-  { month: 'ม.ค. 68', value: 142600 },
-  { month: 'ก.พ. 68', value: 139200 },
-  { month: 'มี.ค. 68', value: 148900 },
-  { month: 'เม.ย. 68', value: 144300 },
-  { month: 'พ.ค. 68', value: 155800 },
-  { month: 'มิ.ย. 68', value: 162400 },
+  { month: 'ก.ค. 67', monthEn: 'Jul 24', value: 98500 },
+  { month: 'ส.ค. 67', monthEn: 'Aug 24', value: 105200 },
+  { month: 'ก.ย. 67', monthEn: 'Sep 24', value: 112300 },
+  { month: 'ต.ค. 67', monthEn: 'Oct 24', value: 119800 },
+  { month: 'พ.ย. 67', monthEn: 'Nov 24', value: 128400 },
+  { month: 'ธ.ค. 67', monthEn: 'Dec 24', value: 135100 },
+  { month: 'ม.ค. 68', monthEn: 'Jan 25', value: 142600 },
+  { month: 'ก.พ. 68', monthEn: 'Feb 25', value: 139200 },
+  { month: 'มี.ค. 68', monthEn: 'Mar 25', value: 148900 },
+  { month: 'เม.ย. 68', monthEn: 'Apr 25', value: 144300 },
+  { month: 'พ.ค. 68', monthEn: 'May 25', value: 155800 },
+  { month: 'มิ.ย. 68', monthEn: 'Jun 25', value: 162400 },
 ];
 
 // --- หมวดข้อมูลยอดนิยม 8 หมวด ---
 const CATEGORIES = [
-  { name: 'สาธารณสุข', icon: '🏥', count: 2145, color: '#f87171' },
-  { name: 'การศึกษา', icon: '📚', count: 1832, color: '#60a5fa' },
-  { name: 'คมนาคม', icon: '🚗', count: 1567, color: '#34d399' },
-  { name: 'เศรษฐกิจ', icon: '💰', count: 1423, color: '#fbbf24' },
-  { name: 'สิ่งแวดล้อม', icon: '🌿', count: 1298, color: '#a78bfa' },
-  { name: 'ความปลอดภัย', icon: '🛡️', count: 1156, color: '#fb923c' },
-  { name: 'เทคโนโลยี', icon: '💻', count: 987, color: '#2dd4bf' },
-  { name: 'การเกษตร', icon: '🌾', count: 876, color: '#f472b6' },
+  { name: 'สาธารณสุข', nameEn: 'Public Health', icon: '🏥', count: 2145, color: '#f87171' },
+  { name: 'การศึกษา', nameEn: 'Education', icon: '📚', count: 1832, color: '#60a5fa' },
+  { name: 'คมนาคม', nameEn: 'Transport', icon: '🚗', count: 1567, color: '#34d399' },
+  { name: 'เศรษฐกิจ', nameEn: 'Economy', icon: '💰', count: 1423, color: '#fbbf24' },
+  { name: 'สิ่งแวดล้อม', nameEn: 'Environment', icon: '🌿', count: 1298, color: '#a78bfa' },
+  { name: 'ความปลอดภัย', nameEn: 'Safety', icon: '🛡️', count: 1156, color: '#fb923c' },
+  { name: 'เทคโนโลยี', nameEn: 'Technology', icon: '💻', count: 987, color: '#2dd4bf' },
+  { name: 'การเกษตร', nameEn: 'Agriculture', icon: '🌾', count: 876, color: '#f472b6' },
 ];
 
 // --- ชุดข้อมูลอัปเดตล่าสุด 5 รายการ ---
 const LATEST_DATASETS = [
-  { title: 'สถิติผู้ป่วยไข้เลือดออกรายเดือน', org: 'กรมควบคุมโรค', date: '14 ก.ค. 2568', category: 'สาธารณสุข' },
-  { title: 'ข้อมูลการจราจรทางถนนสายหลัก', org: 'กรมทางหลวง', date: '13 ก.ค. 2568', category: 'คมนาคม' },
-  { title: 'สถิติผลสอบ O-NET รายจังหวัด', org: 'สทศ.', date: '13 ก.ค. 2568', category: 'การศึกษา' },
-  { title: 'ดัชนีราคาผู้บริโภครายเดือน', org: 'กระทรวงพาณิชย์', date: '12 ก.ค. 2568', category: 'เศรษฐกิจ' },
-  { title: 'ข้อมูลคุณภาพอากาศรายชั่วโมง', org: 'กรมควบคุมมลพิษ', date: '12 ก.ค. 2568', category: 'สิ่งแวดล้อม' },
+  { title: 'สถิติผู้ป่วยไข้เลือดออกรายเดือน', titleEn: 'Monthly Dengue Fever Statistics', org: 'กรมควบคุมโรค', orgEn: 'Dept of Disease Control', date: '14 ก.ค. 2568', dateEn: '14 Jul 2025', category: 'สาธารณสุข', categoryEn: 'Public Health' },
+  { title: 'ข้อมูลการจราจรทางถนนสายหลัก', titleEn: 'Main Road Traffic Data', org: 'กรมทางหลวง', orgEn: 'Dept of Highways', date: '13 ก.ค. 2568', dateEn: '13 Jul 2025', category: 'คมนาคม', categoryEn: 'Transport' },
+  { title: 'สถิติผลสอบ O-NET รายจังหวัด', titleEn: 'O-NET Exam Results by Province', org: 'สทศ.', orgEn: 'NIETS', date: '13 ก.ค. 2568', dateEn: '13 Jul 2025', category: 'การศึกษา', categoryEn: 'Education' },
+  { title: 'ดัชนีราคาผู้บริโภครายเดือน', titleEn: 'Monthly Consumer Price Index', org: 'กระทรวงพาณิชย์', orgEn: 'Ministry of Commerce', date: '12 ก.ค. 2568', dateEn: '12 Jul 2025', category: 'เศรษฐกิจ', categoryEn: 'Economy' },
+  { title: 'ข้อมูลคุณภาพอากาศรายชั่วโมง', titleEn: 'Hourly Air Quality Data (PM2.5)', org: 'กรมควบคุมมลพิษ', orgEn: 'Pollution Control Dept', date: '12 ก.ค. 2568', dateEn: '12 Jul 2025', category: 'สิ่งแวดล้อม', categoryEn: 'Environment' },
 ];
 
 // --- ชุดข้อมูลทั้งหมดสำหรับหน้าสำรวจ ---
 const ORGANIZATIONS = ['กรมควบคุมโรค', 'กรมทางหลวง', 'สทศ.', 'กระทรวงพาณิชย์', 'กรมควบคุมมลพิษ', 'กรมอุตุนิยมวิทยา', 'สำนักงานสถิติแห่งชาติ', 'กรมพัฒนาที่ดิน', 'ธนาคารแห่งประเทศไทย', 'กรมส่งเสริมการเกษตร'];
+const ORGANIZATIONS_EN = ['Dept of Disease Control', 'Dept of Highways', 'NIETS', 'Ministry of Commerce', 'Pollution Control Dept', 'Meteorological Dept', 'National Statistical Office', 'Land Development Dept', 'Bank of Thailand', 'Agricultural Extension Dept'];
 const FORMATS = ['CSV', 'JSON', 'Excel', 'API'];
 const FREQUENCIES = ['รายวัน', 'รายสัปดาห์', 'รายเดือน', 'รายไตรมาส', 'รายปี'];
+const FREQUENCIES_EN = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Annual'];
 const TAGS_LIST = ['สถิติ', 'สาธารณสุข', 'เศรษฐกิจ', 'การศึกษา', 'สิ่งแวดล้อม', 'คมนาคม', 'ประชากร', 'งบประมาณ', 'การเกษตร', 'เทคโนโลยี'];
+const TAGS_LIST_EN = ['Statistics', 'Public Health', 'Economy', 'Education', 'Environment', 'Transport', 'Population', 'Budget', 'Agriculture', 'Technology'];
 
 function generateDatasets(count) {
   const titles = [
@@ -163,6 +169,23 @@ function generateDatasets(count) {
     'สถิติผู้ป่วย COVID-19', 'ข้อมูลถนนสายหลัก',
     'สถิติการกู้ยืมเงิน กยศ.', 'ข้อมูลการใช้น้ำประปา',
   ];
+  const titlesEn = [
+    'Monthly Dengue Fever Statistics', 'Main Road Traffic Volume Data',
+    'O-NET Test Results by Province', 'Monthly Consumer Price Index',
+    'Hourly Air Quality PM2.5 Data', 'Daily Rainfall Measurements',
+    'Population Statistics by Province', 'National Budget Allocation Data',
+    'Monthly Tourism Statistics', 'Agricultural Produce Price Data',
+    'Quarterly Unemployment Rate', 'Number of Schools by Province',
+    'Monthly Traffic Accident Statistics', 'Export Value by Country',
+    'Metro Passenger Volume Statistics', 'Flood Area Data by Province',
+    'Monthly Newborn Statistics', 'Public Debt Statistics',
+    'Electricity Consumption Statistics', 'Buddhist Temples Nationwide',
+    'Monthly Criminal Case Statistics', 'Elderly Population by Province',
+    'Vaccination Statistics', 'Forest Area Statistics',
+    'Internet Usage Statistics', 'Gross Provincial Product Data',
+    'COVID-19 Patient Statistics', 'Main Highway Network Data',
+    'Student Loan Fund Statistics', 'Tap Water Usage Statistics',
+  ];
   const descs = [
     'ชุดข้อมูลแสดงจำนวนผู้ป่วยรายจังหวัด แยกรายเดือน พร้อมอัตราป่วยต่อแสนประชากร',
     'ข้อมูลปริมาณการจราจรบนถนนสายหลักทั่วประเทศ แยกตามช่วงเวลา',
@@ -170,22 +193,38 @@ function generateDatasets(count) {
     'ดัชนีราคาสินค้าและบริการสำหรับผู้บริโภค เทียบปีฐาน',
     'ข้อมูลวัดคุณภาพอากาศ PM2.5 และ AQI จากสถานีตรวจวัดทั่วประเทศ',
   ];
+  const descsEn = [
+    'Dataset displaying monthly patient count by province along with rate per 100,000 population',
+    'Traffic volume data on major nationwide roads categorized by time periods',
+    'National educational test results categorized by subject and province',
+    'Consumer goods and services price index relative to base year',
+    'PM2.5 and AQI air quality measurement data from nationwide monitoring stations',
+  ];
   const results = [];
   for (let i = 0; i < count; i++) {
     const catIdx = i % CATEGORIES.length;
+    const orgIdx = i % ORGANIZATIONS.length;
+    const freqIdx = i % FREQUENCIES.length;
     const fmts = FORMATS.slice(0, 1 + Math.floor(Math.random() * FORMATS.length)).sort();
     results.push({
       id: i + 1,
       title: titles[i % titles.length],
+      titleEn: titlesEn[i % titlesEn.length],
       description: descs[i % descs.length],
-      organization: ORGANIZATIONS[i % ORGANIZATIONS.length],
+      descriptionEn: descsEn[i % descsEn.length],
+      organization: ORGANIZATIONS[orgIdx],
+      organizationEn: ORGANIZATIONS_EN[orgIdx],
       category: CATEGORIES[catIdx].name,
+      categoryEn: CATEGORIES[catIdx].nameEn,
       lastUpdated: `${14 - (i % 14)} ก.ค. 2568`,
-      frequency: FREQUENCIES[i % FREQUENCIES.length],
+      lastUpdatedEn: `${14 - (i % 14)} Jul 2025`,
+      frequency: FREQUENCIES[freqIdx],
+      frequencyEn: FREQUENCIES_EN[freqIdx],
       formats: [...new Set(fmts)],
       downloads: Math.floor(Math.random() * 50000) + 500,
       year: 2568 - (i % 3),
       tags: [TAGS_LIST[catIdx], TAGS_LIST[(catIdx + 3) % TAGS_LIST.length]],
+      tagsEn: [TAGS_LIST_EN[catIdx], TAGS_LIST_EN[(catIdx + 3) % TAGS_LIST_EN.length]],
     });
   }
   return results;
@@ -202,21 +241,21 @@ const DENGUE_MONTHLY_2568 = [380, 340, 420, 560, 980, 1680, 2100, 1890, 1350, 85
 
 // ข้อมูลรายภูมิภาค (สะสมทั้งปี 2568)
 const DENGUE_BY_REGION = [
-  { region: 'ภาคเหนือ', cases: 4520 },
-  { region: 'ภาคตะวันออกเฉียงเหนือ', cases: 6830 },
-  { region: 'ภาคกลาง', cases: 8240 },
-  { region: 'ภาคตะวันออก', cases: 3150 },
-  { region: 'ภาคตะวันตก', cases: 2180 },
-  { region: 'ภาคใต้', cases: 5480 },
+  { region: 'ภาคเหนือ', regionEn: 'Northern', cases: 4520 },
+  { region: 'ภาคตะวันออกเฉียงเหนือ', regionEn: 'Northeastern', cases: 6830 },
+  { region: 'ภาคกลาง', regionEn: 'Central', cases: 8240 },
+  { region: 'ภาคตะวันออก', regionEn: 'Eastern', cases: 3150 },
+  { region: 'ภาคตะวันตก', regionEn: 'Western', cases: 2180 },
+  { region: 'ภาคใต้', regionEn: 'Southern', cases: 5480 },
 ];
 
 // ข้อมูลตามช่วงอายุ
 const DENGUE_BY_AGE = [
-  { range: '0-14 ปี', cases: 7250, percent: 23.8 },
-  { range: '15-24 ปี', cases: 9120, percent: 29.9 },
-  { range: '25-44 ปี', cases: 8340, percent: 27.4 },
-  { range: '45-64 ปี', cases: 4210, percent: 13.8 },
-  { range: '65 ปีขึ้นไป', cases: 1480, percent: 4.9 },
+  { range: '0-14 ปี', rangeEn: '0-14 yrs', cases: 7250, percent: 23.8 },
+  { range: '15-24 ปี', rangeEn: '15-24 yrs', cases: 9120, percent: 29.9 },
+  { range: '25-44 ปี', rangeEn: '25-44 yrs', cases: 8340, percent: 27.4 },
+  { range: '45-64 ปี', rangeEn: '45-64 yrs', cases: 4210, percent: 13.8 },
+  { range: '65 ปีขึ้นไป', rangeEn: '65+ yrs', cases: 1480, percent: 4.9 },
 ];
 
 // --- ข้อมูลรายจังหวัด × 12 เดือน ---
@@ -251,9 +290,9 @@ const ANOMALY_THRESHOLD = avgValue * 3;
 
 // --- Compare page: ข้อมูลสำหรับเปรียบเทียบ ---
 const COMPARE_INDICATORS = [
-  { id: 'cases', label: 'จำนวนผู้ป่วย (ราย)' },
-  { id: 'rate', label: 'อัตราต่อแสนประชากร' },
-  { id: 'trend', label: 'แนวโน้มเทียบปีก่อน (%)' },
+  { id: 'cases', label: 'จำนวนผู้ป่วย (ราย)', labelEn: 'Number of Patients' },
+  { id: 'rate', label: 'อัตราต่อแสนประชากร', labelEn: 'Rate per 100k pop' },
+  { id: 'trend', label: 'แนวโน้มเทียบปีก่อน (%)', labelEn: 'Year-over-Year Trend (%)' },
 ];
 
 // สร้างข้อมูลสำหรับเปรียบเทียบ 2 ปี
@@ -266,5 +305,6 @@ const PROVINCE_DATA_2567 = PROVINCES.map((p, i) => ({
 
 // --- Utility: format numbers ---
 function formatNumber(n) {
-  return new Intl.NumberFormat('th-TH').format(n);
+  const lang = (typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en') ? 'en-US' : 'th-TH';
+  return new Intl.NumberFormat(lang).format(n);
 }
