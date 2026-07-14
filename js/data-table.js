@@ -46,7 +46,10 @@ function initDataTable() {
       state.search = e.target.value.trim().toLowerCase();
       state.page = 1;
       renderTable();
-    }, 300));
+      const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+      const count = getFilteredData().length;
+      announce(isEn ? `Found ${count} provinces` : `พบข้อมูล ${count} จังหวัด`);
+    }, 400));
   }
 
   const regionSelect = document.getElementById('filter-region');

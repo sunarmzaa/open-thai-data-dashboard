@@ -154,24 +154,28 @@ function initCompare() {
         const provName = (isEn && p.nameEn) ? p.nameEn : p.name;
         const regName = (isEn && p.regionEn) ? p.regionEn : p.region;
         return `
-          <div class="combobox-option" role="option" aria-selected="false" data-value="${p.name}">
+          <div class="combobox-option" id="opt-${p.name}" role="option" aria-selected="false" data-value="${p.name}">
             ${provName} <span style="color: var(--color-text-muted); font-size: var(--text-xs);">(${regName})</span>
           </div>
         `;
       }).join('');
 
       activeIndex = -1;
+      input.removeAttribute('aria-activedescendant');
     }
 
     function openListbox() {
       listbox.setAttribute('data-open', 'true');
       wrapper.setAttribute('aria-expanded', 'true');
+      input.setAttribute('aria-expanded', 'true');
       populateListbox(input.value.trim());
     }
 
     function closeListbox() {
       listbox.setAttribute('data-open', 'false');
       wrapper.setAttribute('aria-expanded', 'false');
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
       activeIndex = -1;
     }
 
@@ -268,11 +272,15 @@ function initCompare() {
 
     function updateActiveOption(options) {
       options.forEach((o, i) => {
-        o.setAttribute('aria-selected', i === activeIndex ? 'true' : 'false');
-        if (i === activeIndex) {
+        const isSel = i === activeIndex;
+        o.setAttribute('aria-selected', isSel ? 'true' : 'false');
+        if (isSel) {
           o.scrollIntoView({ block: 'nearest' });
+          if (o.id) input.setAttribute('aria-activedescendant', o.id);
+          announce(o.textContent.replace(/\s+/g, ' ').trim());
         }
       });
+      if (activeIndex === -1) input.removeAttribute('aria-activedescendant');
     }
 
     renderSelectedTags();

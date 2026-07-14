@@ -92,6 +92,9 @@ function initExplore() {
       state.sortDir = dir;
       state.page = 1;
       renderResults();
+      const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+      const optText = sortSelect.options[sortSelect.selectedIndex] ? sortSelect.options[sortSelect.selectedIndex].text : '';
+      announce(isEn ? `Sorted by ${optText}` : `เรียงลำดับตาม ${optText}`);
     });
   }
 
@@ -108,6 +111,9 @@ function initExplore() {
       state.page = 1;
       updateSortUI();
       renderResults();
+      const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
+      const dirText = state.sortDir === 'asc' ? (isEn ? 'ascending' : 'จากน้อยไปมาก') : (isEn ? 'descending' : 'จากมากไปน้อย');
+      announce(isEn ? `Sorted by ${th.textContent.trim()} ${dirText}` : `เรียงตาม ${th.textContent.trim()} ${dirText}`);
     });
 
     th.addEventListener('keydown', (e) => {
