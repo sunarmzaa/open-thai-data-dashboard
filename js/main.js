@@ -5,10 +5,17 @@
 
 // Apply theme immediately to prevent flash of unstyled content
 (function applyInitialTheme() {
-  const savedTheme = localStorage.getItem('wcag_theme');
-  const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-  const theme = savedTheme || (prefersLight ? 'light' : 'dark');
-  document.documentElement.setAttribute('data-theme', theme);
+  try {
+    let savedTheme = localStorage.getItem('wcag_theme');
+    const fullSaved = localStorage.getItem('wcag_full_settings');
+    if (fullSaved) {
+      const parsed = JSON.parse(fullSaved);
+      if (parsed && parsed.theme) savedTheme = parsed.theme;
+    }
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    const theme = savedTheme || (prefersLight ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) {}
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
