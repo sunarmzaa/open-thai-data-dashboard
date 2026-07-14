@@ -1425,15 +1425,40 @@ legend {
   position: relative;
 }
 
+/* Dropdown chevron indicator */
+.combobox-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 10px;
+  height: 10px;
+  border-right: 2.5px solid var(--color-text-2);
+  border-bottom: 2.5px solid var(--color-text-2);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.combobox-wrapper:focus-within::after {
+  border-color: var(--color-primary);
+  transform: translateY(-35%) rotate(-135deg);
+}
+
 .combobox-input {
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-sm) 2.75rem var(--space-sm) var(--space-md);
   min-height: 44px;
   background: var(--color-surface-1);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   color: var(--color-text);
   font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.combobox-input::placeholder {
+  color: var(--color-text-muted);
 }
 
 .combobox-input:focus {
@@ -1707,12 +1732,12 @@ legend {
 }
 
 .wcag-tab-btn.tab-tree-highlight {
-  color: #047857;
+  color: #024d38;  /* ~8.5:1 on #ffffff (AAA) — was #047857 at 5.01:1 */
 }
 
 .wcag-tab-btn.tab-tree-highlight.active {
-  color: #047857;
-  border-top: 2px solid #047857;
+  color: #024d38;
+  border-top: 2px solid #024d38;
 }
 
 [data-theme="dark"] .wcag-tab-btn.tab-tree-highlight,
