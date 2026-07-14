@@ -1255,8 +1255,8 @@ legend {
 
 .sidebar {
   position: sticky;
-  top: calc(var(--nav-height) + var(--space-xl));
-  max-height: calc(100vh - var(--nav-height) - var(--space-xl) * 2);
+  top: calc(32px + var(--nav-height) + var(--space-xl));
+  max-height: calc(100vh - 32px - var(--nav-height) - var(--space-xl) * 2);
   overflow-y: auto;
   padding-right: var(--space-xs);
 }

@@ -491,6 +491,12 @@ p {
 @media (max-width: 480px) {
   html { font-size: 14.5px; }
   h1 { font-size: var(--text-xl); }
+  .mockup-banner {
+    padding: 0 var(--space-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 /* --- Print --- */
