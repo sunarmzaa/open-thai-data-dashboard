@@ -37,7 +37,10 @@
     console.warn('Could not load WCAG settings:', e);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function initSuite() {
+    if (window._wcagSuiteInitialized) return;
+    window._wcagSuiteInitialized = true;
+    window._wcagSuiteLoaded = true;
     initQuickTools();
     initFloatingWidget();
     injectDrawer();
@@ -45,7 +48,13 @@
     initReadingMask();
     initVoiceAnnouncer();
     bindEvents();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSuite);
+  } else {
+    initSuite();
+  }
 
   function saveSettings() {
     try {

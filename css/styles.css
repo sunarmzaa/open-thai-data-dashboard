@@ -7,6 +7,11 @@
 /* --- Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap');
 
+/* Ensure HTML5 hidden attribute always overrides flex/grid/block author styles */
+[hidden] {
+  display: none !important;
+}
+
 /* --- Design Tokens --- */
 :root, [data-theme="dark"] {
   /* Colors — Dark Theme (Sleek Obsidian & Glassmorphism) */

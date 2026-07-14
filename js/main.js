@@ -18,12 +18,18 @@
   } catch(e) {}
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
+function initMain() {
   ensureWcagSuiteLoaded();
   initThemeToggle();
   initNavigation();
   initCurrentPage();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMain);
+} else {
+  initMain();
+}
 
 /* --- Ensure WCAG Suite Script is Loaded --- */
 function ensureWcagSuiteLoaded() {

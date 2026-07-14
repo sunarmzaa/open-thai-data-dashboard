@@ -4,6 +4,11 @@
    WCAG 2.2 AA & AAA Compliant (Light & Dark Themes)
    ========================================================== */
 
+/* Ensure HTML5 hidden attribute always overrides flex/grid/block author styles */
+[hidden] {
+  display: none !important;
+}
+
 /* --- Navigation --- */
 .site-nav {
   position: fixed;
