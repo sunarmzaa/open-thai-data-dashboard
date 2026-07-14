@@ -12,7 +12,7 @@
 /* --- Navigation --- */
 .site-nav {
   position: fixed;
-  top: 0;
+  top: 32px; /* Below mockup-banner */
   left: 0;
   right: 0;
   height: var(--nav-height);
@@ -444,7 +444,7 @@
 
   .nav-links {
     position: fixed;
-    top: var(--nav-height);
+    top: calc(32px + var(--nav-height)); /* Include mockup-banner height */
     left: 0;
     right: 0;
     background: var(--color-surface-1);
@@ -1395,27 +1395,214 @@ legend {
   box-shadow: var(--shadow-sm);
 }
 
-/* --- Footer --- */
+/* --- Enterprise Multi-column Footer --- */
 .site-footer {
   border-top: 1px solid var(--color-border);
-  padding: var(--space-2xl) 0;
   margin-top: var(--space-3xl);
   background: var(--color-surface-1);
+  color: var(--color-text-2);
+  font-size: var(--text-sm);
+  position: relative;
+  overflow: hidden;
 }
 
 .footer-inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-xl);
-  text-align: center;
+  padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr 1.3fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  text-align: left;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.footer-brand .brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-lg);
+  color: var(--chart-point-stroke);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.footer-desc {
   color: var(--color-text-3);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
+  margin: 0;
 }
 
-.footer-inner p:first-child {
+.footer-heading {
+  font-size: var(--text-sm);
+  font-weight: 800;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer-links li {
+  margin: 0;
+}
+
+.footer-links a {
+  color: var(--color-text-3);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-links a:hover {
+  color: var(--color-primary);
+  transform: translateX(4px);
+}
+
+.footer-links a:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.footer-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  color: var(--color-text-3);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.footer-feature-icon {
+  color: var(--color-primary);
+  font-size: var(--text-base);
+  flex-shrink: 0;
+}
+
+.footer-status-box {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.footer-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+}
+
+.footer-status-row strong {
+  color: var(--color-text);
+}
+
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--color-text-2);
+  background: var(--color-primary-glow);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.footer-badge.success {
+  background: rgba(110, 231, 183, 0.15);
+  color: var(--color-success);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+@media (max-width: 1100px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  .footer-bottom-links {
+    justify-content: center;
+  }
 }
 
 /* --- Combobox (Province Selector) --- */

@@ -14,6 +14,11 @@
 <body>
   <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
 
+  <div class="mockup-banner" role="status" aria-label="ข้อมูลจำลอง">
+    <span class="mockup-dot" aria-hidden="true"></span>
+    ระบบนี้ใช้ข้อมูลจำลอง (<span lang="en">Mockup</span>) เพื่อสาธิตเท่านั้น
+  </div>
+
   <header class="site-nav" role="banner">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand" aria-label="Open Data ไทย หน้าหลัก">
@@ -101,10 +106,75 @@
     </div>
   </main>
 
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" aria-label="ส่วนท้ายกระดานข้อมูลและเมนูนำทางเสริม">
     <div class="footer-inner">
-      <p><span lang="en">Open Data</span> ไทย — แดชบอร์ดข้อมูลเปิดภาครัฐ เข้าถึงได้ ใช้งานง่าย สำหรับทุกคน</p>
-      <p>ออกแบบตามมาตรฐาน <span lang="en">WCAG 2.2 AA/AAA</span> · รองรับ <span lang="en">Light Mode</span> และ <span lang="en">Dark Mode</span></p>
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Mission -->
+        <div class="footer-col">
+          <a href="index.html" class="footer-brand" aria-label="Open Data ไทย หน้าหลักส่วนท้าย">
+            <span class="brand-icon" aria-hidden="true">📊</span>
+            <span lang="en">Open Data</span> ไทย
+          </a>
+          <p class="footer-desc">แพลตฟอร์มศูนย์รวมข้อมูลเปิดภาครัฐ เพื่อการวิเคราะห์และตัดสินใจบนรากฐานข้อมูลเชิงประจักษ์ที่ทุกคนเข้าถึงได้อย่างเท่าเทียม</p>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+          <h2 class="footer-heading" id="footer-menu-title">⚡ เมนูด่วน</h2>
+          <ul class="footer-links" aria-labelledby="footer-menu-title">
+            <li><a href="index.html">หน้าหลัก</a></li>
+            <li><a href="explore.html">สำรวจชุดข้อมูล</a></li>
+            <li><a href="visualization.html">แสดงผลด้วยภาพ</a></li>
+            <li><a href="data-table.html">ตารางข้อมูลเชิงลึก</a></li>
+            <li><a href="compare.html">เปรียบเทียบรายจังหวัด</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Accessibility Features -->
+        <div class="footer-col">
+          <h2 class="footer-heading" id="footer-a11y-title">♿ การเข้าถึง (WCAG)</h2>
+          <ul class="footer-feature-list" aria-labelledby="footer-a11y-title">
+            <li class="footer-feature-item">
+              <span class="footer-feature-icon" aria-hidden="true">⌨️</span>
+              <span>รองรับการนำทางด้วยคีย์บอร์ด 100% (<span lang="en">Full Keyboard Nav</span>)</span>
+            </li>
+            <li class="footer-feature-item">
+              <span class="footer-feature-icon" aria-hidden="true">🗣️</span>
+              <span>เข้ากันได้กับโปรแกรมอ่านหน้าจอ (<span lang="en">Screen Reader Friendly</span>)</span>
+            </li>
+            <li class="footer-feature-item">
+              <span class="footer-feature-icon" aria-hidden="true">🌓</span>
+              <span>ความเปรียบต่างสูง (<span lang="en">Light & Dark Modes</span>)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Project Status & Standards -->
+        <div class="footer-col">
+          <h2 class="footer-heading" id="footer-status-title">🛡️ มาตรฐานระบบ</h2>
+          <div class="footer-status-box" aria-labelledby="footer-status-title">
+            <div class="footer-status-row">
+              <span>มาตรฐาน:</span>
+              <strong><span lang="en">WCAG 2.2 AA / AAA</span></strong>
+            </div>
+            <div class="footer-status-row">
+              <span>สภาพแวดล้อม:</span>
+              <span class="footer-badge success" role="status">🟢 <span lang="en">Mockup Ready</span></span>
+            </div>
+            <div class="footer-status-row">
+              <span>เวอร์ชันระบบ:</span>
+              <strong><span lang="en">v1.0.0</span></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 <span lang="en">Open Data</span> ไทย — พัฒนาตามมาตรฐานเว็บไซต์ที่ทุกคนเข้าถึงได้</div>
+        <div class="footer-bottom-links">
+          <span>ข้อมูลจำลอง (<span lang="en">Mockup Data</span>) เพื่อการศึกษาและสาธิตเท่านั้น</span>
+        </div>
+      </div>
     </div>
   </footer>
 
