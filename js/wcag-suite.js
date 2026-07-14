@@ -91,9 +91,9 @@
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด (Theme)">
           <span aria-hidden="true">☀️</span>
         </button>
-        <button type="button" class="wcag-suite-trigger" id="wcag-open-btn" aria-label="เปิดเมนูตั้งค่าการเข้าถึง WCAG ฉบับเต็ม (Full Option)" aria-expanded="false" aria-controls="wcag-drawer" title="ตั้งค่าการเข้าถึง (WCAG Full Option)">
+        <button type="button" class="wcag-suite-trigger" id="wcag-open-btn" aria-label="เปิดเมนูตั้งค่าการเข้าถึง WCAG" aria-expanded="false" aria-controls="wcag-drawer" title="ตั้งค่าการเข้าถึง (WCAG)">
           <span aria-hidden="true">♿</span>
-          <span class="wcag-trigger-text">การเข้าถึง <span class="badge-wcag-suite">Full</span></span>
+          <span class="wcag-trigger-text">การเข้าถึง</span>
         </button>
       `;
       const navToggle = document.getElementById('nav-toggle');
@@ -155,7 +155,7 @@
     widget.innerHTML = `
       <div class="wcag-floating-panel" id="wcag-floating-panel" hidden aria-hidden="true">
         <div class="floating-panel-header">
-          <strong><span aria-hidden="true">♿</span> เครื่องมือเข้าถึงด่วนแบบ Full Option</strong>
+          <strong><span aria-hidden="true">♿</span> เครื่องมือเข้าถึงด่วน</strong>
           <button type="button" class="floating-close-btn" id="floating-close-btn" aria-label="ปิดเครื่องมือลอยตัว">&times;</button>
         </div>
         <div class="floating-panel-body">
@@ -207,9 +207,9 @@
           </div>
         </div>
       </div>
-      <button type="button" class="wcag-floating-trigger" id="wcag-floating-trigger" aria-expanded="false" aria-controls="wcag-floating-panel" aria-label="เปิดเครื่องมือช่วยเหลือการเข้าถึงแบบลอยตัว (Full Option)">
+      <button type="button" class="wcag-floating-trigger" id="wcag-floating-trigger" aria-expanded="false" aria-controls="wcag-floating-panel" aria-label="เปิดเครื่องมือช่วยเหลือการเข้าถึงแบบลอยตัว">
         <span class="floating-icon" aria-hidden="true">♿</span>
-        <span class="floating-label-pill">เครื่องมือเข้าถึง <span class="badge-wcag-suite">Full Option</span></span>
+        <span class="floating-label-pill">เครื่องมือเข้าถึง</span>
       </button>
     `;
 
@@ -401,11 +401,11 @@
     drawer.className = 'wcag-drawer';
     drawer.setAttribute('role', 'dialog');
     drawer.setAttribute('aria-modal', 'true');
-    drawer.setAttribute('aria-label', 'แผงตั้งค่าการเข้าถึง WCAG 2.2 AA / AAA แบบ Full Option พร้อม Accessibility Tree');
+    drawer.setAttribute('aria-label', 'แผงตั้งค่าการเข้าถึง WCAG 2.2 AA / AAA พร้อม Accessibility Tree');
     drawer.innerHTML = `
       <div class="wcag-drawer-header">
         <div>
-          <h2><span aria-hidden="true">♿</span> ตั้งค่าการเข้าถึง (WCAG Full Option)</h2>
+          <h2><span aria-hidden="true">♿</span> ตั้งค่าการเข้าถึง (WCAG)</h2>
           <p>ปรับแต่งหน้าจอและโครงสร้างตามมาตรฐานสากล WCAG 2.2 AA / AAA</p>
         </div>
         <button type="button" class="wcag-close-btn" id="wcag-close-btn" aria-label="ปิดแผงตั้งค่าการเข้าถึง">&times;</button>
