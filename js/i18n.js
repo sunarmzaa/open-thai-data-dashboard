@@ -47,7 +47,7 @@ const I18N_DICTIONARY = {
     "home.chart.title": "📈 แนวโน้มการเข้าถึงข้อมูลและดาวน์โหลด (รายเดือน)",
     "home.chart.summary": "📋 สรุปข้อมูลจากกราฟ",
     "home.chart.desc": "กราฟแสดงการเพิ่มขึ้นของการเข้าถึงและดาวน์โหลดชุดข้อมูลเปิดตั้งแต่เดือน ม.ค. ถึง ธ.ค. 2568 โดยมียอดดาวน์โหลดสูงสุดในเดือน พ.ย.",
-    "home.cats.title": "🗂️ หมวดหมู่ชุดข้อมูลยอดนิยม",
+    "home.cats.title": "🗂️ ดูหมวดหมู่ชุดข้อมูลยอดนิยม",
     "home.updates.title": "🔄 ชุดข้อมูลอัปเดตล่าสุด",
     "home.view.all": "ดูทั้งหมด",
 
@@ -286,7 +286,7 @@ function getCurrentLang() {
   try {
     const saved = localStorage.getItem('wcag_lang');
     if (saved === 'en' || saved === 'th') return saved;
-  } catch (e) {}
+  } catch (e) { }
   return 'th'; // Default language is Thai
 }
 
@@ -300,10 +300,10 @@ function t(key, fallback = '') {
 /* --- Set & Apply Language --- */
 function setLanguage(newLang, announce = true) {
   if (newLang !== 'en' && newLang !== 'th') newLang = 'th';
-  
+
   try {
     localStorage.setItem('wcag_lang', newLang);
-  } catch (e) {}
+  } catch (e) { }
 
   // 1. Update Root DOM <html lang="...">
   document.documentElement.setAttribute('lang', newLang);
