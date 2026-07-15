@@ -16,6 +16,8 @@ const I18N_DICTIONARY = {
     "nav.viz": "แสดงผลด้วยภาพ",
     "nav.table": "ตารางข้อมูล",
     "nav.compare": "เปรียบเทียบ",
+    "nav.compare.aria": "เปรียบเทียบข้อมูลสถิติผู้ป่วยไข้เลือดออกรายจังหวัด",
+    "footer.nav.compare": "เปรียบเทียบรายจังหวัด",
     "nav.toggle.label": "เปิดเมนูนำทาง",
     "nav.i18n.btn": "🇹🇭 TH",
     "nav.i18n.aria": "เปลี่ยนภาษาเป็นภาษาอังกฤษ / Switch to English",
@@ -50,6 +52,8 @@ const I18N_DICTIONARY = {
     "home.cats.title": "ดูหมวดหมู่ชุดข้อมูลยอดนิยม",
     "home.updates.title": "ชุดข้อมูลอัปเดตล่าสุด",
     "home.view.all": "ดูทั้งหมด",
+    "home.cats.viewall.aria": "ดูหมวดหมู่ชุดข้อมูลยอดนิยมและรูปภาพสัญลักษณ์ทั้งหมด",
+    "home.updates.viewall.aria": "ดูชุดข้อมูลอัปเดตล่าสุดและรายการทั้งหมด",
 
     // Explore Page (explore.html)
     "explore.title": "สำรวจชุดข้อมูล",
@@ -89,6 +93,9 @@ const I18N_DICTIONARY = {
     "viz.chart3.summary": "สรุป: กลุ่มอายุ 15-24 ปีมีสัดส่วนผู้ป่วยมากที่สุด (29.9%) รองลงมาคือ 25-44 ปี (27.4%) และ 0-14 ปี (23.8%) กลุ่มผู้สูงอายุ 65 ปีขึ้นไปมีสัดส่วนน้อยที่สุด (4.9%) แต่มีอัตราอาการรุนแรงสูง",
     "viz.dl.img": "📷 ดาวน์โหลดภาพ",
     "viz.dl.csv": "📥 CSV",
+    "viz.dl.chart1.img.aria": "ดาวน์โหลดกราฟจำนวนผู้ป่วยไข้เลือดออกเปรียบเทียบปี 2567 กับ 2568 เป็นรูปภาพ PNG",
+    "viz.dl.chart2.img.aria": "ดาวน์โหลดกราฟสัดส่วนผู้ป่วยไข้เลือดออกสะสมแยกตามภูมิภาค เป็นรูปภาพ PNG",
+    "viz.dl.chart3.img.aria": "ดาวน์โหลดกราฟสัดส่วนผู้ป่วยไข้เลือดออกตามช่วงอายุ เป็นรูปภาพ PNG",
     "viz.summary.btn": "📋 สรุปข้อมูลจากกราฟ",
     "viz.table.toggle": "📋 ดูเป็นตารางข้อมูล",
 
@@ -132,7 +139,9 @@ const I18N_DICTIONARY = {
     "compare.map.note": "คลิกที่ชื่อจังหวัดบนแผนที่หรือใช้กล่องค้นหาด้านบนเพื่อเลือก",
     "compare.table.title": "ตารางเปรียบเทียบ",
     "compare.share.btn": "🔗 แชร์ลิงก์",
+    "compare.share.aria": "แชร์ผลการเปรียบเทียบข้อมูลรายจังหวัดเป็นลิงก์",
     "compare.print.btn": "🖨️ พิมพ์รายงาน",
+    "compare.print.aria": "พิมพ์รายงานสรุปผลการเปรียบเทียบข้อมูลรายจังหวัด",
 
     // Page Document Titles
     "doc.title.home": "หน้าหลัก — Open Data ไทย",
@@ -154,6 +163,8 @@ const I18N_DICTIONARY = {
     "nav.viz": "Visualizations",
     "nav.table": "Data Tables",
     "nav.compare": "Compare",
+    "nav.compare.aria": "Compare Provincial Statistical Data for Dengue Fever Cases",
+    "footer.nav.compare": "Compare Provincial Data",
     "nav.toggle.label": "Toggle navigation menu",
     "nav.i18n.btn": "🇬🇧 EN",
     "nav.i18n.aria": "Switch to Thai / เปลี่ยนภาษาเป็นภาษาไทย",
@@ -188,6 +199,8 @@ const I18N_DICTIONARY = {
     "home.cats.title": "Popular Dataset Categories",
     "home.updates.title": "Recently Updated Datasets",
     "home.view.all": "View All",
+    "home.cats.viewall.aria": "View all popular dataset categories and symbol images",
+    "home.updates.viewall.aria": "View all recently updated datasets and listings",
 
     // Explore Page (explore.html)
     "explore.title": "Explore Datasets",
@@ -227,6 +240,9 @@ const I18N_DICTIONARY = {
     "viz.chart3.summary": "Summary: Age group 15-24 years accounts for the largest proportion (29.9%), followed by 25-44 years (27.4%) and 0-14 years (23.8%). Elderly group 65+ accounts for the smallest proportion (4.9%) but has higher severity rates.",
     "viz.dl.img": "📷 Download PNG",
     "viz.dl.csv": "📥 CSV",
+    "viz.dl.chart1.img.aria": "Download Monthly Dengue Cases Comparison Chart as PNG image",
+    "viz.dl.chart2.img.aria": "Download Cumulative Dengue Cases by Region Chart as PNG image",
+    "viz.dl.chart3.img.aria": "Download Dengue Patient Proportion by Age Group Chart as PNG image",
     "viz.summary.btn": "📋 Chart Summary",
     "viz.table.toggle": "📋 View as Data Table",
 
@@ -270,7 +286,9 @@ const I18N_DICTIONARY = {
     "compare.map.note": "Click province names on map or use search box above to select",
     "compare.table.title": "Comparison Table",
     "compare.share.btn": "🔗 Share Link",
+    "compare.share.aria": "Share provincial comparison results as a link",
     "compare.print.btn": "🖨️ Print Report",
+    "compare.print.aria": "Print summary report of provincial data comparison",
 
     // Page Document Titles
     "doc.title.home": "Home — Open Data Thailand",

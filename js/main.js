@@ -389,7 +389,7 @@ function getNavHTML(activePage) {
           <a href="explore.html" class="nav-link">สำรวจข้อมูล</a>
           <a href="visualization.html" class="nav-link">แสดงผลด้วยภาพ</a>
           <a href="data-table.html" class="nav-link">ตารางข้อมูล</a>
-          <a href="compare.html" class="nav-link">เปรียบเทียบ</a>
+          <a href="compare.html" class="nav-link" aria-label="เปรียบเทียบข้อมูลสถิติผู้ป่วยไข้เลือดออกรายจังหวัด" data-i18n="nav.compare" data-i18n-aria-label="nav.compare.aria">เปรียบเทียบ</a>
         </nav>
         <div class="nav-actions" role="group" aria-label="เครื่องมือเสริมและการนำทาง">
           <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="เปิดเมนูนำทาง">
