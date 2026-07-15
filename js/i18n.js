@@ -22,12 +22,12 @@ const I18N_DICTIONARY = {
 
     // Enterprise Footer
     "footer.desc": "แพลตฟอร์มศูนย์รวมข้อมูลเปิดภาครัฐ เพื่อการวิเคราะห์และตัดสินใจบนรากฐานข้อมูลเชิงประจักษ์ที่ทุกคนเข้าถึงได้อย่างเท่าเทียม",
-    "footer.quick": "⚡ เมนูด่วน",
-    "footer.a11y": "♿ การเข้าถึง (WCAG)",
+    "footer.quick": "เมนูด่วน",
+    "footer.a11y": "การเข้าถึง (WCAG)",
     "footer.a11y.kb": "รองรับการนำทางด้วยคีย์บอร์ด 100% (Full Keyboard Nav)",
     "footer.a11y.sr": "เข้ากันได้กับโปรแกรมอ่านหน้าจอ (Screen Reader Friendly)",
     "footer.a11y.mode": "ความเปรียบต่างสูง (Light & Dark Modes)",
-    "footer.standards": "🛡️ มาตรฐานระบบ",
+    "footer.standards": "มาตรฐานระบบ",
     "footer.std.label": "มาตรฐาน:",
     "footer.env.label": "สภาพแวดล้อม:",
     "footer.env.val": "🟢 Mockup Ready",
@@ -44,11 +44,11 @@ const I18N_DICTIONARY = {
     "stats.orgs": "หน่วยงานเจ้าของข้อมูล",
     "stats.downloads": "ดาวน์โหลดสะสม",
     "stats.apis": "การเรียกใช้งาน API",
-    "home.chart.title": "📈 แนวโน้มการเข้าถึงข้อมูลและดาวน์โหลด (รายเดือน)",
-    "home.chart.summary": "📋 สรุปข้อมูลจากกราฟ",
+    "home.chart.title": "แนวโน้มการเข้าถึงข้อมูลและดาวน์โหลด (รายเดือน)",
+    "home.chart.summary": "สรุปข้อมูลจากกราฟ",
     "home.chart.desc": "กราฟแสดงการเพิ่มขึ้นของการเข้าถึงและดาวน์โหลดชุดข้อมูลเปิดตั้งแต่เดือน ม.ค. ถึง ธ.ค. 2568 โดยมียอดดาวน์โหลดสูงสุดในเดือน พ.ย.",
-    "home.cats.title": "🗂️ ดูหมวดหมู่ชุดข้อมูลยอดนิยม",
-    "home.updates.title": "🔄 ชุดข้อมูลอัปเดตล่าสุด",
+    "home.cats.title": "ดูหมวดหมู่ชุดข้อมูลยอดนิยม",
+    "home.updates.title": "ชุดข้อมูลอัปเดตล่าสุด",
     "home.view.all": "ดูทั้งหมด",
 
     // Explore Page (explore.html)
@@ -160,12 +160,12 @@ const I18N_DICTIONARY = {
 
     // Enterprise Footer
     "footer.desc": "Government open data platform for evidence-based analysis and decision making, accessible to everyone.",
-    "footer.quick": "⚡ Quick Links",
-    "footer.a11y": "♿ Accessibility (WCAG)",
+    "footer.quick": "Quick Links",
+    "footer.a11y": "Accessibility (WCAG)",
     "footer.a11y.kb": "100% Keyboard Navigation Supported (Full Keyboard Nav)",
     "footer.a11y.sr": "Screen Reader Friendly & Compatible",
     "footer.a11y.mode": "High Contrast (Light & Dark Modes)",
-    "footer.standards": "🛡️ System Standards",
+    "footer.standards": "System Standards",
     "footer.std.label": "Standard:",
     "footer.env.label": "Environment:",
     "footer.env.val": "🟢 Mockup Ready",
@@ -182,11 +182,11 @@ const I18N_DICTIONARY = {
     "stats.orgs": "Data Organizations",
     "stats.downloads": "Total Downloads",
     "stats.apis": "API Requests",
-    "home.chart.title": "📈 Data Access & Download Trends (Monthly)",
-    "home.chart.summary": "📋 Chart Summary",
+    "home.chart.title": "Data Access & Download Trends (Monthly)",
+    "home.chart.summary": "Chart Summary",
     "home.chart.desc": "The chart illustrates increasing trends in open dataset access and downloads from Jan to Dec 2025, reaching peak downloads in Nov.",
-    "home.cats.title": "🗂️ Popular Dataset Categories",
-    "home.updates.title": "🔄 Recently Updated Datasets",
+    "home.cats.title": "Popular Dataset Categories",
+    "home.updates.title": "Recently Updated Datasets",
     "home.view.all": "View All",
 
     // Explore Page (explore.html)

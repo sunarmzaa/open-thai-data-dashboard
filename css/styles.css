@@ -264,7 +264,7 @@ button, input, select, textarea {
 
 /* --- Focus Styles (WCAG 2.4.7 / 2.4.11 / 2.4.13) --- */
 :focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
@@ -289,33 +289,25 @@ h4 { font-size: var(--text-lg);  margin-bottom: var(--space-sm); }
 p {
   margin-bottom: var(--space-md);
   color: var(--color-text-2);
+  max-width: 75ch;
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-primary-dark);
   display: inline-block;
 }
 
 [data-theme="light"] .text-gradient {
-  background: linear-gradient(135deg, var(--color-primary-dark), #783300);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-primary-dark);
 }
 
 [data-theme="dark"] .text-gradient {
-  background: linear-gradient(135deg, #93c5fd, #fde047);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-primary);
 }
 
 [data-theme="hc-yellow"] .text-gradient,
 [data-theme="hc-white"] .text-gradient,
 [data-theme="monochrome"] .text-gradient {
-  background: none;
-  -webkit-text-fill-color: var(--color-text);
   color: var(--color-text);
 }
 
