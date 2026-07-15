@@ -107,10 +107,7 @@
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="สลับโหมดสว่างหรือมืด" title="สลับโหมดสว่าง/มืด (Theme)">
           <span aria-hidden="true">☀️</span>
         </button>
-        <button type="button" class="wcag-suite-trigger" id="wcag-open-btn" aria-label="เปิดเมนูตั้งค่าการเข้าถึง WCAG" aria-expanded="false" aria-controls="wcag-drawer" title="ตั้งค่าการเข้าถึง (WCAG)">
-          <span aria-hidden="true">♿</span>
-          <span class="wcag-trigger-text">การเข้าถึง</span>
-        </button>
+
       `;
       const navToggle = document.getElementById('nav-toggle');
       if (navToggle) {
@@ -160,11 +157,7 @@
       });
     });
 
-    // Drawer open button
-    const openBtn = document.getElementById('wcag-open-btn');
-    if (openBtn) {
-      openBtn.addEventListener('click', () => openDrawer());
-    }
+
 
     updateQuickToolsUI();
   }
@@ -1296,8 +1289,7 @@
     if (qCursor) qCursor.innerHTML = `<span aria-hidden="true">👆</span> ${isEn ? 'Cursor' : 'เคอร์เซอร์'}`;
     const qMask = document.getElementById('quick-mask-btn');
     if (qMask) qMask.innerHTML = `<span aria-hidden="true">📏</span> ${isEn ? 'Guide' : 'ช่วยอ่าน'}`;
-    const qWcagText = document.querySelector('#wcag-open-btn .wcag-trigger-text');
-    if (qWcagText) qWcagText.textContent = isEn ? 'Accessibility' : 'การเข้าถึง';
+
 
     // Drawer tabs
     const tabTypo = document.getElementById('tab-typography');

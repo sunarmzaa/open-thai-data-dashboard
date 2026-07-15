@@ -529,7 +529,8 @@ const ChartLib = (() => {
     btn.className = 'btn btn-secondary btn-sm chart-view-toggle';
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', tableId);
-    btn.innerHTML = `<span aria-hidden="true">📋</span> ${isEn ? 'Table View' : 'ดูข้อมูลเป็นตาราง'}`;
+    btn.innerHTML = `<span aria-hidden="true">📋</span> ${isEn ? `View ${chartTitle} as Table` : `ดูข้อมูล${chartTitle}เป็นตาราง`}`;
+    btn.dataset.chartTitle = chartTitle;
     btn.addEventListener('click', () => {
       const tableEl = document.getElementById(tableId);
       const isExpanded = btn.getAttribute('aria-expanded') === 'true';
@@ -537,8 +538,8 @@ const ChartLib = (() => {
       tableEl.hidden = isExpanded;
       const curEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
       btn.innerHTML = isExpanded 
-        ? `<span aria-hidden="true">📋</span> ${curEn ? 'Table View' : 'ดูข้อมูลเป็นตาราง'}` 
-        : `<span aria-hidden="true">📊</span> ${curEn ? 'Chart View' : 'ดูเป็นกราฟ'}`;
+        ? `<span aria-hidden="true">📋</span> ${curEn ? `View ${chartTitle} as Table` : `ดูข้อมูล${chartTitle}เป็นตาราง`}` 
+        : `<span aria-hidden="true">📊</span> ${curEn ? `View ${chartTitle} as Chart` : `ดู${chartTitle}เป็นกราฟ`}`;
 
       // Toggle canvas visibility
       const canvas = container.querySelector('canvas');
@@ -628,9 +629,10 @@ const ChartLib = (() => {
     const isEn = typeof window !== 'undefined' && window.getCurrentLang && window.getCurrentLang() === 'en';
     document.querySelectorAll('.chart-view-toggle').forEach(btn => {
       const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      const title = btn.dataset.chartTitle || '';
       btn.innerHTML = isExpanded 
-        ? `<span aria-hidden="true">📊</span> ${isEn ? 'Chart View' : 'ดูเป็นกราฟ'}`
-        : `<span aria-hidden="true">📋</span> ${isEn ? 'Table View' : 'ดูข้อมูลเป็นตาราง'}`;
+        ? `<span aria-hidden="true">📊</span> ${isEn ? `View ${title} as Chart` : `ดู${title}เป็นกราฟ`}`
+        : `<span aria-hidden="true">📋</span> ${isEn ? `View ${title} as Table` : `ดูข้อมูล${title}เป็นตาราง`}`;
     });
     document.querySelectorAll('.chart-legend').forEach(leg => {
       leg.setAttribute('aria-label', isEn ? 'Chart Legend' : 'คำอธิบายสัญลักษณ์');
