@@ -57,6 +57,7 @@ const I18N_DICTIONARY = {
 
     // Explore Page (explore.html)
     "explore.title": "สำรวจชุดข้อมูล",
+    "explore.results.title": "รายการชุดข้อมูล",
     "explore.desc": "ค้นหาและเข้าถึงชุดข้อมูลเปิดจากหน่วยงานภาครัฐทั่วประเทศ",
     "explore.filters": "ตัวกรอง",
     "explore.search.label": "ค้นหา",
@@ -101,6 +102,7 @@ const I18N_DICTIONARY = {
 
     // Data Table Page (data-table.html)
     "table.page.title": "ตารางข้อมูลเชิงลึก",
+    "table.main.heading": "ตารางข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด",
     "table.page.desc": "ข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด × รายเดือน ปี 2568",
     "table.toolbar.search": "🔍 ค้นหาจังหวัด...",
     "table.toolbar.region": "ทุกภูมิภาค",
@@ -204,6 +206,7 @@ const I18N_DICTIONARY = {
 
     // Explore Page (explore.html)
     "explore.title": "Explore Datasets",
+    "explore.results.title": "Dataset Listings",
     "explore.desc": "Search and access open datasets from government agencies nationwide",
     "explore.filters": "Filters",
     "explore.search.label": "Search",
@@ -248,6 +251,7 @@ const I18N_DICTIONARY = {
 
     // Data Table Page (data-table.html)
     "table.page.title": "Data Tables",
+    "table.main.heading": "Provincial Dengue Fever Data Table",
     "table.page.desc": "Dengue Fever Cases by Province × Month, 2025",
     "table.toolbar.search": "🔍 Search province...",
     "table.toolbar.region": "All Regions",

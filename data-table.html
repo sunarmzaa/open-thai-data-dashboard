@@ -70,47 +70,50 @@
       <h1 data-i18n="table.page.title">ตารางข้อมูลเชิงลึก</h1>
       <p data-i18n="table.page.desc">ข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด × รายเดือน ปี 2568</p>
 
-      <!-- Toolbar -->
-      <div class="toolbar">
-        <div class="toolbar-left">
-          <div class="form-group" style="margin-bottom: 0;">
-            <label for="search-province" class="sr-only" data-i18n="table.th.province">ค้นหาจังหวัด</label>
-            <input type="search" id="search-province" class="form-input" placeholder="🔍 ค้นหาจังหวัด..." style="width: 240px;" data-i18n-placeholder="table.toolbar.search" autocomplete="off">
+      <!-- Toolbar & Data Table Section -->
+      <section aria-labelledby="table-section-title">
+        <h2 id="table-section-title" class="sr-only" data-i18n="table.main.heading">ตารางข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด</h2>
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="search-province" class="sr-only" data-i18n="table.th.province">ค้นหาจังหวัด</label>
+              <input type="search" id="search-province" class="form-input" placeholder="🔍 ค้นหาจังหวัด..." style="width: 240px;" data-i18n-placeholder="table.toolbar.search" autocomplete="off">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="filter-region" class="sr-only" data-i18n="table.th.region">กรองตามภูมิภาค</label>
+              <select id="filter-region" class="form-select" style="width: auto;">
+                <option value="" data-i18n="table.toolbar.region">ทุกภูมิภาค</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group" style="margin-bottom: 0;">
-            <label for="filter-region" class="sr-only" data-i18n="table.th.region">กรองตามภูมิภาค</label>
-            <select id="filter-region" class="form-select" style="width: auto;">
-              <option value="" data-i18n="table.toolbar.region">ทุกภูมิภาค</option>
-            </select>
+          <div class="toolbar-right">
+            <button type="button" class="btn btn-secondary btn-sm" id="export-csv" aria-label="ส่งออกข้อมูลเป็นไฟล์ Comma-Separated Values (CSV)" data-i18n="table.export.csv">
+              <span aria-hidden="true">📥</span> <abbr title="Comma-Separated Values" lang="en">CSV</abbr>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="export-excel" aria-label="ส่งออกข้อมูลเป็นไฟล์ Microsoft Excel (XLSX)" data-i18n="table.export.excel">
+              <span aria-hidden="true">📥</span> <abbr title="Microsoft Excel Spreadsheet" lang="en">Excel</abbr>
+            </button>
           </div>
         </div>
-        <div class="toolbar-right">
-          <button type="button" class="btn btn-secondary btn-sm" id="export-csv" aria-label="ส่งออกข้อมูลเป็นไฟล์ Comma-Separated Values (CSV)" data-i18n="table.export.csv">
-            <span aria-hidden="true">📥</span> <abbr title="Comma-Separated Values" lang="en">CSV</abbr>
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm" id="export-excel" aria-label="ส่งออกข้อมูลเป็นไฟล์ Microsoft Excel (XLSX)" data-i18n="table.export.excel">
-            <span aria-hidden="true">📥</span> <abbr title="Microsoft Excel Spreadsheet" lang="en">Excel</abbr>
-          </button>
+
+        <!-- Results count -->
+        <div id="table-results" role="status" aria-live="polite" style="font-size: var(--text-sm); color: var(--color-text-3); margin-bottom: var(--space-md);"></div>
+
+        <!-- Data Table -->
+        <div class="table-wrapper" style="max-height: 600px; overflow: auto;">
+          <table class="data-table sticky-col province-table" id="province-table" aria-label="ตารางข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด ปี 2568">
+            <thead id="province-thead">
+              <!-- Populated by JS: 2-level headers -->
+            </thead>
+            <tbody id="province-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
         </div>
-      </div>
 
-      <!-- Results count -->
-      <div id="table-results" role="status" aria-live="polite" style="font-size: var(--text-sm); color: var(--color-text-3); margin-bottom: var(--space-md);"></div>
-
-      <!-- Data Table -->
-      <div class="table-wrapper" style="max-height: 600px; overflow: auto;">
-        <table class="data-table sticky-col province-table" id="province-table" aria-label="ตารางข้อมูลผู้ป่วยไข้เลือดออกรายจังหวัด ปี 2568">
-          <thead id="province-thead">
-            <!-- Populated by JS: 2-level headers -->
-          </thead>
-          <tbody id="province-tbody">
-            <!-- Populated by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination -->
-      <div id="pagination-container"></div>
+        <!-- Pagination -->
+        <div id="pagination-container"></div>
+      </section>
     </div>
   </main>
 
