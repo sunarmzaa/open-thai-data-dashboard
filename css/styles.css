@@ -44,8 +44,8 @@
   /* Borders & Overlays */
   --color-border:      rgba(148, 163, 184, 0.18);
   --color-border-hover:rgba(148, 163, 184, 0.38);
-  --color-glass:       #131d2f;  /* Opaque equivalent — fixes NaN contrast (was rgba(22,32,50,0.75) on #080e1a) */
-  --color-active-nav-bg:#2d3f58; /* Opaque primary-glow on glass: rgba(147,197,253,0.2) on #131d2f */
+  --color-glass:       #162032;  /* Matches surface-1 exactly — eliminates 1.03:1 boundary difference with surface buttons while keeping AAA text contrast (> 14.5:1) */
+  --color-active-nav-bg:#24334c; /* Opaque primary-glow on glass: rgba(147,197,253,0.2) on #162032 */
   --color-badge-bg:          #21334c;
   --color-badge-text:        #bfdbfe;
   --color-badge-success-bg:  #16382c;
@@ -101,8 +101,8 @@
   /* Borders & Overlays */
   --color-border:      rgba(148, 163, 184, 0.35);
   --color-border-hover:rgba(100, 116, 139, 0.6);
-  --color-glass:       #fbfcfd;  /* Opaque equivalent — fixes NaN contrast (was rgba(255,255,255,0.88) on #f8fafc) */
-  --color-active-nav-bg:#d8deed; /* Opaque primary-glow on glass: rgba(20,54,148,0.15) on #fbfcfd */
+  --color-glass:       #ffffff;  /* Matches surface-1 exactly — eliminates 1.03:1 boundary difference with surface buttons while keeping AAA text contrast (> 17.8:1) */
+  --color-active-nav-bg:#d8deed; /* Opaque primary-glow on glass: rgba(20,54,148,0.15) on #ffffff */
   --color-badge-bg:          #dce5f5;
   --color-badge-text:        #0c2363;
   --color-badge-success-bg:  #dcf2e8;
@@ -359,7 +359,7 @@ li span, label span, strong span, a span {
 
 @keyframes mockupPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.85; }
 }
 
 .page-content {
@@ -411,27 +411,27 @@ li span, label span, strong span, a span {
 
 /* --- Animations --- */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0.99; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0.99; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-20px); }
+  from { opacity: 0.99; transform: translateX(-20px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50%      { opacity: 0.6; }
+  50%      { opacity: 0.85; }
 }
 
 @keyframes countUp {
-  from { opacity: 0; transform: scale(0.85); }
+  from { opacity: 0.99; transform: scale(0.85); }
   to   { opacity: 1; transform: scale(1); }
 }
 

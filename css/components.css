@@ -290,7 +290,7 @@
 }
 
 @keyframes floatPanelFadeIn {
-  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  from { opacity: 0.99; transform: translateY(12px) scale(0.96); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -1269,11 +1269,13 @@ legend {
   transform: translate(-50%, -100%);
   margin-top: -10px;
   opacity: 0;
-  transition: opacity var(--transition-fast);
+  visibility: hidden;
+  transition: opacity var(--transition-fast), visibility var(--transition-fast);
 }
 
 .chart-tooltip.visible {
   opacity: 1;
+  visibility: visible;
 }
 
 /* --- Sidebar + Content Layout --- */
