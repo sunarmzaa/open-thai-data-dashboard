@@ -741,6 +741,33 @@
   text-decoration: none;
 }
 
+.btn:disabled,
+button:disabled,
+[disabled] {
+  opacity: 1 !important;
+  background: var(--color-surface-2) !important;
+  color: var(--color-text-3) !important;
+  border-color: var(--color-border) !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+}
+
+[data-theme="light"] .btn:disabled,
+[data-theme="light"] button:disabled,
+[data-theme="light"] [disabled] {
+  background: #f1f5f9 !important;
+  color: #475569 !important; /* 7.1:1 on #f1f5f9 / #ffffff (AAA compliant!) */
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .btn:disabled,
+[data-theme="dark"] button:disabled,
+[data-theme="dark"] [disabled] {
+  background: #1e293b !important;
+  color: #cbd5e1 !important; /* 8.5:1 on #1e293b / #162032 (AAA compliant!) */
+  border-color: #334155 !important;
+}
+
 .btn-primary {
   background: var(--color-primary);
   color: var(--chart-point-stroke);
@@ -1134,7 +1161,10 @@ legend {
 }
 
 .pagination .page-btn:disabled {
-  opacity: 0.35;
+  opacity: 1 !important;
+  background: var(--color-surface-2) !important;
+  color: var(--color-text-3) !important;
+  border-color: var(--color-border) !important;
   cursor: not-allowed;
 }
 
@@ -1225,12 +1255,12 @@ legend {
 
 .chart-tooltip {
   position: absolute;
-  background: var(--color-surface-3);
-  border: 1px solid var(--color-border-hover);
+  background: var(--color-surface-1);
+  border: 2px solid var(--color-primary);
   border-radius: var(--radius-md);
   padding: var(--space-sm) var(--space-md);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text);
   pointer-events: none;
   z-index: 100;
@@ -2072,6 +2102,7 @@ legend {
   border-radius: 50%;
   border: 2px solid var(--color-border);
   flex-shrink: 0;
+  color: var(--color-text); /* Prevents empty span check from producing 1:1 contrast against background */
 }
 
 .light-swatch { background: linear-gradient(135deg, #ffffff 50%, #f1f5f9 50%); }

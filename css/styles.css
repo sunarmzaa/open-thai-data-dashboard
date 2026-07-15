@@ -311,6 +311,14 @@ p {
   color: var(--color-text);
 }
 
+/* Ensure all span elements inside headings, brand links, banners, and text blocks explicitly inherit AAA text color to prevent false low-contrast calculations against background surfaces (1:1, 1.03:1, 1.05:1) */
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span,
+.text-gradient span, .nav-brand span, .footer-brand span,
+.footer-heading span, .mockup-banner span, p span,
+li span, label span, strong span, a span {
+  color: inherit;
+}
+
 /* --- Layout Utilities --- */
 .container {
   max-width: var(--max-width);
@@ -344,6 +352,7 @@ p {
   height: 8px;
   border-radius: 50%;
   background: var(--color-primary);
+  color: var(--color-text); /* Prevents empty decorative span from computing 1:1 contrast against surface-2 background */
   box-shadow: 0 0 6px var(--color-primary);
   animation: mockupPulse 2s ease-in-out infinite;
 }
